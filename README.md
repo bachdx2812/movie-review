@@ -1,24 +1,14 @@
-# README
+# How to run in local
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. You need an `.env` file, duplicate `.env.example` and edit to fit your environment
+2. Run below command to create db
 
-Things you may want to cover:
+```
+bundle exec rake db:create
+```
 
-* Ruby version
+3. Run below command to apply migrations
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1
+```
