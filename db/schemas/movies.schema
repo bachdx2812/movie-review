@@ -1,0 +1,12 @@
+create_table "movies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  t.integer :user_id, null: false
+  t.string :youtube_url, null: false
+  t.string :title, null: false, default: ""
+  t.string :description
+  t.integer :like_count, default: 0, null: false
+  t.integer :dislike_count, default: 0, null: false
+
+  t.timestamps
+
+  t.index ["user_id"], name: "index_movies_on_userid", unique: true
+end
