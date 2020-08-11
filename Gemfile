@@ -70,3 +70,4 @@ gem "pundit" # Authorization
 gem "ransack" # ActiveRecord searching
 gem "ridgepole" # DB management
 gem "sidekiq" # background job
+gem "rest-client" # http request

@@ -1,0 +1,2 @@
+class FetchVideoYoutubeError < StandardError
+end
