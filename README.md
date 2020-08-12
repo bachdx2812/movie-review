@@ -12,3 +12,10 @@ bundle exec rake db:create
 ```
 bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1
 ```
+
+4. Obtains your google API key for more infos fetchable from youtube. If `YOUTUBE_API_KEY` doesnt provided,
+   you can still fetch from youtube but will not able to fetch data like `description` nor `publisedAt`
+   
+   How to get your google API key: https://console.developers.google.com/
+
+5. Actually we can make an service to crawl data from youtube using `capybara` but will take more time and the process will not be fast, not a good idea though
