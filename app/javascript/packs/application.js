@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const vue = new Vue({
     el: "#app",
     components: {
+      PageHome: () => import("@/pages/PageHome"),
     },
   });
 });
