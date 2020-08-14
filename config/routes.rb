@@ -37,4 +37,17 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "home#index"
+
+  namespace :api do
+    resources :movies, only: [] do
+      collection do
+        get :search
+      end
+
+      member do
+        post :like
+        post :unlike
+      end
+    end
+  end
 end

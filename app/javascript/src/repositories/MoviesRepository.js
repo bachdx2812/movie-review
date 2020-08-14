@@ -8,7 +8,7 @@ export default {
     const paramsSerializer = (params = {}) =>
       qs.stringify(params, { arrayFormat: "brackets" });
 
-    return request.get(`${resource}.json`, {
+    return request.get(`${resource}/search.json`, {
       params,
       paramsSerializer,
     });

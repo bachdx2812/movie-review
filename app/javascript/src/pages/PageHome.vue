@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Movies List</h1>
-    <MoviesList />
+    <MoviesList :movies="movies" />
   </div>
 </template>
 
@@ -12,13 +12,22 @@ const moviesRepo = RepositoryFactory.get("movies");
 import MoviesList from "@/components/Movie/MoviesList";
 
 export default {
-  components: [MoviesList],
+  components: {
+    MoviesList,
+  },
+  data() {
+    return {
+      movies: [],
+    };
+  },
   created() {
     this.fetchListMovies();
   },
   methods: {
     async fetchListMovies() {
-      await moviesRepo.search();
+      const result = await moviesRepo.search();
+
+      this.movies = result.data.movies;
     },
   },
 };
