@@ -3,14 +3,14 @@ module Api
     def search
       collection = Movie.all.order(id: :desc)
 
-      pagy, articles = pagy(
+      pagy, movies = pagy(
         collection,
         items: params[:perPage] || PER_PAGE,
         page: params[:page],
       )
 
       return response_collection_success(
-        articles,
+        movies,
         pagy,
         each_serializer: ::Home::HomeMoviesSerializer,
       )

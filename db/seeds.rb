@@ -5,7 +5,7 @@ ActiveRecord::Base.transaction do
 
   i = 1
 
-  while i <= 10 do
+  while i <= 100 do
     user = User.create!(
       username: "user#{i}",
       password: "123456",

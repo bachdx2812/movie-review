@@ -5,6 +5,9 @@ require("channels");
 import Vue from "vue/dist/vue.esm";
 import "../styles/application.scss";
 
+import infiniteScroll from "vue-infinite-scroll";
+Vue.use(infiniteScroll);
+
 require.context("../images", true);
 require.context("../fonts", true);
 

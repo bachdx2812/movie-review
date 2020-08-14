@@ -1,7 +1,13 @@
 <template>
   <div>
     <h1>Movies List</h1>
-    <MoviesList :movies="movies" />
+    <div
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="10"
+    >
+      <MoviesList :movies="movies" />
+    </div>
   </div>
 </template>
 
@@ -18,16 +24,24 @@ export default {
   data() {
     return {
       movies: [],
+      loading: false,
+      meta: {
+        page: 0,
+      },
     };
-  },
-  created() {
-    this.fetchListMovies();
   },
   methods: {
     async fetchListMovies() {
-      const result = await moviesRepo.search();
+      const result = await moviesRepo.search({
+        page: this.meta.page,
+      });
 
-      this.movies = result.data.movies;
+      this.movies = [...this.movies, ...result.data.movies];
+      this.meta = result.data.meta;
+    },
+    loadMore() {
+      this.meta.page += 1;
+      this.fetchListMovies();
     },
   },
 };
