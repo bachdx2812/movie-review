@@ -34,10 +34,6 @@ group :development, :test do
   gem "awesome_print" # make your rails console display infos better
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   gem "dotenv-rails", "~> 2.1", ">= 2.1.1" # env
-  gem "fasterer" # check slow code
-  gem "foreman" # start multiple apps
-  gem "rubocop" # ruby code formating
-  gem "rubocop-rails" # extension for rubocop
 end
 
 group :development do
@@ -45,6 +41,12 @@ group :development do
   gem "listen", "~> 3.2"
   gem "web-console", ">= 3.3.0"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem "annotate", git: "https://github.com/ctran/annotate_models.git" # annotate models & routes
+  gem "awesome_print" # make your rails console display infos better
+  gem "fasterer" # check slow code
+  gem "foreman" # start multiple apps
+  gem "rubocop" # ruby code formating
+  gem "rubocop-rails" # extension for rubocop
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
 end
@@ -68,6 +70,6 @@ gem "pagy" # paging, much more better than kaminari
 gem "paper_trail" # versions of activerecord
 gem "pundit" # Authorization
 gem "ransack" # ActiveRecord searching
+gem "rest-client" # http request
 gem "ridgepole" # DB management
 gem "sidekiq" # background job
-gem "rest-client" # http request
