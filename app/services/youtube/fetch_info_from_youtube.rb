@@ -45,12 +45,13 @@ module Youtube
     def structure_response
       if request_type == :api_key
         main_info = res.dig("items").first.dig("snippet")
+        puts main_info
 
         {
           title: main_info.dig("title"),
           description: main_info.dig("description"),
           published_at: main_info.dig("publishedAt"),
-          thumbnail: main_info.dig("thumbnails", "details", "standard"),
+          thumbnail: main_info.dig("thumbnails", "standard", "url"),
         }
       else
         main_info = res

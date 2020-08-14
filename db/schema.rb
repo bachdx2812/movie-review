@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer "rate_type", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_movies_on_userid", unique: true
+    t.index ["user_id", "movie_id"], name: "index_movies_on_userid_movieid", unique: true
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
