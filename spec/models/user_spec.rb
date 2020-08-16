@@ -15,6 +15,10 @@ RSpec.describe User, type: :model do
       is_expected.to be_valid
     end
 
+    it "has one after adding one" do
+      instance_double("User")
+    end
+
     # it "does not allow duplicate username" do
     #   FactoryBot.build(username: subject.username).should_not be_valid
     # end

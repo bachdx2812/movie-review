@@ -3,10 +3,8 @@ require "rails_helper"
 describe "GET movies", :type => :request do
   before {
     i = 1
-    movies = []
     while i <= 20 do
       movie = FactoryBot.create(:user, :with_movie)
-      movies.push(movie)
       i += 1
     end
   }
