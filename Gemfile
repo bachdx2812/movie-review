@@ -48,6 +48,7 @@ group :development do
   gem "foreman" # start multiple apps
   gem "rubocop" # ruby code formating
   gem "rubocop-rails" # extension for rubocop
+  gem "rspec-rails"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
 end
@@ -55,6 +56,10 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", ">= 2.15"
+  gem "database_cleaner"
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "rails-controller-testing"
   gem "selenium-webdriver"
   # Easy installation and use of web drivers to run system tests with browsers
   gem "webdrivers"

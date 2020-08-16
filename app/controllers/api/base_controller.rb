@@ -1,7 +1,7 @@
 module Api
   class BaseController < ApplicationController
     include Pagy::Backend
-    PER_PAGE = 10
+    PER_PAGE = ENV["DEFAULT_PER_PAGE"]||10
 
     def authenticate_user_json!
       raise UnauthorizedError.new("You need to authenticate to perform this action") unless current_user

@@ -7,7 +7,7 @@ module Youtube
     def execute
       id = url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/)[1]
 
-      raise FetchIdFromYoutubeError.new("cant fetch Id from this url, #{url}") unless id
+      raise FetchIdFromYoutubeUrlError.new("cant fetch Id from this url, #{url}") unless id
 
       id
     end
