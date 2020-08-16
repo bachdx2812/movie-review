@@ -7,19 +7,19 @@ ActiveRecord::Base.transaction do
 
   while i <= 100 do
     user = User.create!(
-      username: "user#{i}",
+      username: Faker::Internet.username,
       password: "123456",
     )
 
     movie = Movie.create!(
       user_id: user.id,
-      title: "movie#{i}",
-      description: "desc of movie #{i}",
+      title: Faker::Book.title,
+      description: Faker::Lorem.paragraph(sentence_count: 10),
       youtube_url: "https://www.youtube.com/",
-      thumbnail: "https://via.placeholder.com/640x480.png?text=movie#{i}",
+      thumbnail: Faker::LoremFlickr.image(size: "640x480"),
       published_at: Time.now,
-      dislike_count: 0,
-      like_count: 0,
+      dislike_count: Faker::Number.number(digits: 2),
+      like_count: Faker::Number.number(digits: 2),
     )
 
     i += 1
