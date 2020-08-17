@@ -31,6 +31,10 @@
 <script>
 import MoviePreview from "./MoviePreview";
 
+import { createNamespacedHelpers } from "vuex";
+const { mapActions } = createNamespacedHelpers("movies")
+
+
 export default {
   components: {
     MoviePreview,
@@ -51,6 +55,11 @@ export default {
         day: "numeric",
       });
     },
+  },
+  methods: {
+    ...mapActions([
+      "like", "dislike"
+    ]),
   },
 };
 </script>

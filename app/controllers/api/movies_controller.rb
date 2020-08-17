@@ -18,5 +18,25 @@ module Api
       Rails.logger.error("#{self.class.name} error #{action_name} fetch #{e.backtrace.join('\n')}")
       return render json: { movies: [] }
     end
+
+    def like
+      authenticate_user_json!
+    rescue UnauthorizedError => e
+      response_error(
+        e,
+        status: 403,
+        code: "403",
+      )
+    end
+
+    def dislike
+      authenticate_user_json!
+    rescue UnauthorizedError => e
+      response_error(
+        e,
+        status: 403,
+        code: "403",
+      )
+    end
   end
 end
