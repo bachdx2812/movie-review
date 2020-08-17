@@ -9,12 +9,12 @@
         <div class="movie-likes">
           <span
             class="icon like"
-            :class="{ active: movie.like_type == 1 }"
+            :class="{ active: movie.rate == 'like' }"
             @click="like(movie.id)"
           >{{ movie.like_count }}</span>
           <span
             class="icon dislike"
-            :class="{ active: movie.like_type == 2 }"
+            :class="{ active: movie.rate == 'dislike' }"
             @click="dislike(movie.id)"
           >{{ movie.dislike_count }}</span>
         </div>

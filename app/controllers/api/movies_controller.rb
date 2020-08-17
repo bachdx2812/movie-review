@@ -15,6 +15,7 @@ module Api
         movies,
         pagy,
         each_serializer: ::Home::HomeMoviesSerializer,
+        current_user: current_user,
       )
     rescue Pagy::OverflowError => e
       Rails.logger.error("#{self.class.name} error #{action_name} fetch #{e.backtrace.join('\n')}")
