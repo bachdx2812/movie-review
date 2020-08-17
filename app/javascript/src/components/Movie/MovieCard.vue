@@ -7,10 +7,15 @@
       <div class="movie-title">{{ movie.title }}</div>
       <div class="movie-subtitle">
         <div class="movie-likes">
-          <span class="icon like" :class="{ active: movie.like_type == 1 }">{{ movie.like_count }}</span>
+          <span
+            class="icon like"
+            :class="{ active: movie.like_type == 1 }"
+            @click="like(movie.id)"
+          >{{ movie.like_count }}</span>
           <span
             class="icon dislike"
             :class="{ active: movie.like_type == 2 }"
+            @click="dislike(movie.id)"
           >{{ movie.dislike_count }}</span>
         </div>
         <div class="movie-date">{{ movie.published_at | dateFilter }}</div>
@@ -32,8 +37,7 @@
 import MoviePreview from "./MoviePreview";
 
 import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("movies")
-
+const { mapActions } = createNamespacedHelpers("movies");
 
 export default {
   components: {
@@ -57,9 +61,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
-      "like", "dislike"
-    ]),
+    ...mapActions(["like", "dislike"]),
   },
 };
 </script>

@@ -1,0 +1,2 @@
+class AlreadyRatedError < StandardError
+end

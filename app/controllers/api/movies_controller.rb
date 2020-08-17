@@ -1,5 +1,7 @@
 module Api
   class MoviesController < BaseController
+    before_action :authenticate_user_json!, only: [:like, :dislike]
+
     def search
       collection = Movie.all.order(id: :desc)
 
@@ -20,22 +22,42 @@ module Api
     end
 
     def like
-      authenticate_user_json!
-    rescue UnauthorizedError => e
+      movie = Movie.find(params[:id])
+      rate = movie.rate_histories.find_or_initialize_by(
+        user_id: current_user.id,
+      )
+
+      if rate.persisted? && rate.like?
+        raise AlreadyRatedError.new("you have already liked this movie")
+      else
+        rate.like!
+      end
+
+      return response_success(message: "ok")
+    rescue AlreadyRatedError, StandardError => e
       response_error(
-        e,
-        status: 403,
-        code: "403",
+        e.message,
+        status: :unprocessable_entity,
       )
     end
 
     def dislike
-      authenticate_user_json!
-    rescue UnauthorizedError => e
+      movie = Movie.find(params[:id])
+      rate = movie.rate_histories.find_or_initialize_by(
+        user_id: current_user.id,
+      )
+
+      if rate.persisted? && rate.dislike?
+        raise AlreadyRatedError.new("you have already disliked this movie")
+      else
+        rate.dislike!
+      end
+
+      response_success(message: "ok")
+    rescue AlreadyRatedError, StandardError => e
       response_error(
-        e,
-        status: 403,
-        code: "403",
+        e.message,
+        status: :unprocessable_entity,
       )
     end
   end

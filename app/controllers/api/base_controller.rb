@@ -5,6 +5,12 @@ module Api
 
     def authenticate_user_json!
       raise UnauthorizedError.new("You need to authenticate to perform this action") unless current_user
+    rescue UnauthorizedError => e
+      response_error(
+        e,
+        status: 403,
+        code: "403",
+      )
     end
 
     def response_collection_success(data, pagy_data, **options)
