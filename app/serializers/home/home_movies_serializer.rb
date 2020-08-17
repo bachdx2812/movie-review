@@ -19,7 +19,7 @@ module Home
       user_id = instance_options[:current_user]&.id
       return nil unless user_id
 
-      object.rate_histories.find_by(user_id: user_id)&.rate_type
+      object.rate_histories.detect { |rh| rh.user_id == user_id }&.rate_type
     end
   end
 end
