@@ -1,8 +1,8 @@
-ActiveRecord::Base.transaction do
-  User.destroy_all
-  Movie.destroy_all
-  RateHistory.destroy_all
+User.destroy_all
+Movie.destroy_all
+RateHistory.destroy_all
 
+ActiveRecord::Base.transaction do
   i = 1
 
   while i <= 100 do
@@ -29,12 +29,16 @@ end
 movies = Movie.all
 users = User.all
 
-movies.each do |movie|
-  users.each do |user|
-    RateHistory.create!(
-      user_id: user.id,
-      movie_id: movie.id,
-      rate_type: [0, 1].sample,
-    )
+ActiveRecord::Base.transaction do
+  movies.each do |movie|
+    users.each do |user|
+      RateHistory.create!(
+        user_id: user.id,
+        movie_id: movie.id,
+        rate_type: [0, 1].sample,
+      )
+    end
+
+    movie.update_counter!
   end
 end

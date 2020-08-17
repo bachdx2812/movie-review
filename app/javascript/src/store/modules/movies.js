@@ -24,14 +24,6 @@ export default {
       const moviesList = [...state.movies, ...result.data.movies];
       commit(UPDATE_MOVIES, moviesList);
       commit(UPDATE_META, result.data.meta);
-      // this.movies = [...this.movies, ...result.data.movies];
-      // this.meta = result.data.meta;
-    },
-    toggleSidebar({ commit }, payload) {
-      commit(LIKE_MOVIE, payload);
-    },
-    showSidebar({ commit }, payload) {
-      commit(DISLIKE_MOVIE, payload);
     },
     increaseMetaPage({ commit }) {
       commit(INCREASE_META_PAGE);
@@ -57,11 +49,23 @@ export default {
     INCREASE_META_PAGE(state) {
       state.meta.page += 1;
     },
-    LIKE_MOVIE(state) {
-      console.log("like");
+    LIKE_MOVIE(state, payload) {
+      const likedMovie = state.movies.find((m) => m.id === payload);
+
+      if (likedMovie.rate == "dislike" && likedMovie.dislike_count > 0) {
+        likedMovie.dislike_count -= 1;
+      }
+      likedMovie.rate = "like";
+      likedMovie.like_count += 1;
     },
-    DISLIKE_MOVIE(state) {
-      console.log("dislike");
+    DISLIKE_MOVIE(state, payload) {
+      const likedMovie = state.movies.find((m) => m.id === payload);
+
+      if (likedMovie.rate == "like" && likedMovie.like_count > 0) {
+        likedMovie.like_count -= 1;
+      }
+      likedMovie.rate = "dislike";
+      likedMovie.dislike_count += 1;
     },
   },
 };

@@ -32,6 +32,7 @@ module Api
         raise AlreadyRatedError.new("you have already liked this movie")
       else
         rate.like!
+        movie.update_counter!
       end
 
       return response_success(message: "ok")
@@ -52,6 +53,7 @@ module Api
         raise AlreadyRatedError.new("you have already disliked this movie")
       else
         rate.dislike!
+        movie.update_counter!
       end
 
       response_success(message: "ok")

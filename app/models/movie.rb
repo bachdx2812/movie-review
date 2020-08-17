@@ -22,4 +22,13 @@
 class Movie < ApplicationRecord
   belongs_to :user
   has_many :rate_histories
+
+  def update_counter!
+    summary = rate_histories.group(:rate_type).count(:id)
+
+    update!(
+      dislike_count: summary["dislike"] || 0,
+      like_count: summary["like"] || 0,
+    )
+  end
 end
