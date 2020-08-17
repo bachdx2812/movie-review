@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer "user_id", null: false
     t.string "youtube_url", null: false
     t.string "title", default: "", null: false
-    t.string "description"
+    t.text "description"
     t.datetime "published_at"
     t.string "thumbnail"
     t.integer "like_count", default: 0, null: false

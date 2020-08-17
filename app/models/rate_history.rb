@@ -22,4 +22,15 @@ class RateHistory < ApplicationRecord
     dislike: 0,
     like: 1,
   }
+
+  after_commit :update_counter, on: [:create, :destroy]
+
+  def update_counter
+    summary = RateHistory.where(movie_id: 1).group(:rate_type).count(:id)
+
+    movie.update(
+      dislike_count: summary[:dislike] || 0,
+      like_count: summary[:like] || 0,
+    )
+  end
 end

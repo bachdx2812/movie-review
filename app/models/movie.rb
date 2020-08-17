@@ -3,7 +3,7 @@
 # Table name: movies
 #
 #  id            :bigint           not null, primary key
-#  description   :string(255)
+#  description   :text(65535)
 #  dislike_count :integer          default(0), not null
 #  like_count    :integer          default(0), not null
 #  published_at  :datetime

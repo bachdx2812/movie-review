@@ -7,7 +7,7 @@ ActiveRecord::Base.transaction do
 
   while i <= 100 do
     user = User.create!(
-      username: Faker::Internet.username,
+      username: "#{Faker::Internet.username}#{i}",
       password: "123456",
     )
 
@@ -18,23 +18,23 @@ ActiveRecord::Base.transaction do
       youtube_url: "https://www.youtube.com/",
       thumbnail: Faker::LoremFlickr.image(size: "640x480"),
       published_at: Time.now,
-      dislike_count: Faker::Number.number(digits: 2),
-      like_count: Faker::Number.number(digits: 2),
+      dislike_count: 0,
+      like_count: 0,
     )
 
     i += 1
   end
+end
 
-  movies = Movie.all
-  users = User.all
+movies = Movie.all
+users = User.all
 
-  movies.each do |movie|
-    users.each do |user|
-      RateHistory.create!(
-        user_id: user.id,
-        movie_id: movie.id,
-        rate_type: [0, 1].sample,
-      )
-    end
+movies.each do |movie|
+  users.each do |user|
+    RateHistory.create!(
+      user_id: user.id,
+      movie_id: movie.id,
+      rate_type: [0, 1].sample,
+    )
   end
 end
