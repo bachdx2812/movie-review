@@ -43,6 +43,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "annotate", git: "https://github.com/ctran/annotate_models.git" # annotate models & routes
   gem "awesome_print" # make your rails console display infos better
+  gem "faker"
   gem "fasterer" # check slow code
   gem "foreman" # start multiple apps
   gem "rubocop" # ruby code formating

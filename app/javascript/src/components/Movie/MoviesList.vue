@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <ul class="movie-list">
     <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" />
-  </div>
+  </ul>
 </template>
 
 <script>
@@ -20,6 +20,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
