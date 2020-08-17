@@ -4,7 +4,7 @@ module Api
     PER_PAGE = 10
 
     def authenticate_user_json!
-      raise ActionController::Forbidden.new("You need to authenticate to perform this action") unless current_user
+      raise UnauthorizedError.new("You need to authenticate to perform this action") unless current_user
     end
 
     def response_collection_success(data, pagy_data, **options)
@@ -30,8 +30,11 @@ module Api
              })
     end
 
-    def response_error(error = {}, status = :unprocessable_entity)
-      render json: error, status: status
+    def response_error(error = {}, **options)
+      render({
+               json: error,
+               **options,
+             })
     end
 
     def response_not_found

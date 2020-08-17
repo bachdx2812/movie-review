@@ -36,6 +36,16 @@ export default {
     increaseMetaPage({ commit }) {
       commit(INCREASE_META_PAGE);
     },
+    async like({ commit }, payload) {
+      const result = await moviesRepo.like(payload);
+
+      commit(LIKE_MOVIE, payload);
+    },
+    async dislike({ commit }, payload) {
+      const result = await moviesRepo.dislike(payload);
+
+      commit(DISLIKE_MOVIE, payload);
+    },
   },
   mutations: {
     UPDATE_MOVIES(state, payload) {
@@ -47,7 +57,11 @@ export default {
     INCREASE_META_PAGE(state) {
       state.meta.page += 1;
     },
-    LIKE_MOVIE(state) {},
-    DISLIKE_MOVIE(state) {},
+    LIKE_MOVIE(state) {
+      console.log("like");
+    },
+    DISLIKE_MOVIE(state) {
+      console.log("dislike");
+    },
   },
 };

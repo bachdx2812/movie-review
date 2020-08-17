@@ -6,13 +6,16 @@
     <span>{{ movie.like_count }}</span>
     <span>{{ movie.dislike_count }}</span>
     <span>
-      <button @click="like">like</button>
-      <button @click="dislike">dislike</button>
+      <button @click="like(movie.id)">like</button>
+      <button @click="dislike(movie.id)">dislike</button>
     </span>
   </div>
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
+const { mapActions } = createNamespacedHelpers("movies")
+
 export default {
   props: {
     movie: {
@@ -21,8 +24,9 @@ export default {
     },
   },
   methods: {
-    async like() {},
-    async dislike() {},
+    ...mapActions([
+      "like", "dislike"
+    ]),
   },
 };
 </script>

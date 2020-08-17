@@ -1,7 +1,5 @@
 module Api
   class MoviesController < BaseController
-    before_action :authenticate_user_json!, only: [:like, :dislike]
-
     def search
       collection = Movie.all.order(id: :desc)
 
@@ -22,10 +20,23 @@ module Api
     end
 
     def like
-      
+      authenticate_user_json!
+    rescue UnauthorizedError => e
+      response_error(
+        e,
+        status: 403,
+        code: "403",
+      )
     end
 
     def dislike
+      authenticate_user_json!
+    rescue UnauthorizedError => e
+      response_error(
+        e,
+        status: 403,
+        code: "403",
+      )
     end
   end
 end

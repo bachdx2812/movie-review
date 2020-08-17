@@ -32,7 +32,6 @@ export default {
   methods: {
     ...mapActions(["search", "increaseMetaPage"]),
     loadMore() {
-      // this.meta.page += 1;
       this.increaseMetaPage();
       this.search();
     },
