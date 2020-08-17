@@ -4,7 +4,7 @@ describe "GET movies", :type => :request do
   before {
     i = 1
     while i <= 20 do
-      movie = FactoryBot.create(:user, :with_movie)
+      FactoryBot.create(:user, :with_movie)
       i += 1
     end
   }
