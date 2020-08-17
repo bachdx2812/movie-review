@@ -1,6 +1,6 @@
 create_table "movies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
   t.integer :user_id, null: false
-  t.string :youtube_url, null: false
+  t.string :youtube_video_id, null: false
   t.string :title, null: false, default: ""
   t.text :description
   t.datetime :published_at

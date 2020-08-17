@@ -29,7 +29,7 @@
       </div>
       <div class="movie-description">{{ movie.description }}</div>
     </div>
-    <MoviePreview :url="movie.youtube_url" v-if="showVideo" @close="showVideo = false"></MoviePreview>
+    <MoviePreview :url="movie.embed_url" v-if="showVideo" @close="showVideo = false" />
   </li>
 </template>
 

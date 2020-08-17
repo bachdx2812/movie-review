@@ -2,17 +2,17 @@
 #
 # Table name: movies
 #
-#  id            :bigint           not null, primary key
-#  description   :text(65535)
-#  dislike_count :integer          default(0), not null
-#  like_count    :integer          default(0), not null
-#  published_at  :datetime
-#  thumbnail     :string(255)
-#  title         :string(255)      default(""), not null
-#  youtube_url   :string(255)      not null
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  user_id       :integer          not null
+#  id               :bigint           not null, primary key
+#  description      :text(65535)
+#  dislike_count    :integer          default(0), not null
+#  like_count       :integer          default(0), not null
+#  published_at     :datetime
+#  thumbnail        :string(255)
+#  title            :string(255)      default(""), not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  user_id          :integer          not null
+#  youtube_video_id :string(255)      not null
 #
 # Indexes
 #

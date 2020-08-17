@@ -14,7 +14,7 @@
 #                                  root GET    /                                                                                        home#index
 #                     search_api_movies GET    /api/movies/search(.:format)                                                             api/movies#search
 #                        like_api_movie POST   /api/movies/:id/like(.:format)                                                           api/movies#like
-#                      unlike_api_movie POST   /api/movies/:id/unlike(.:format)                                                         api/movies#unlike
+#                     dislike_api_movie POST   /api/movies/:id/dislike(.:format)                                                        api/movies#dislike
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
 #         rails_sendgrid_inbound_emails POST   /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                  action_mailbox/ingresses/sendgrid/inbound_emails#create
