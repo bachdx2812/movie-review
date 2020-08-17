@@ -3,10 +3,8 @@ module Api
     include Pagy::Backend
     PER_PAGE = 10
 
-    before_action :authenticate_user_json!
-
     def authenticate_user_json!
-      # raise
+      raise ActionController::Forbidden.new("You need to authenticate to perform this action") unless current_user
     end
 
     def response_collection_success(data, pagy_data, **options)

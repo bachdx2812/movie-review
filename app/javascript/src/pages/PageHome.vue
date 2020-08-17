@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { RepositoryFactory } from "@/repositories/RepositoryFactory";
-const moviesRepo = RepositoryFactory.get("movies");
+import { createNamespacedHelpers } from "vuex";
+const { mapState, mapActions } = createNamespacedHelpers("movies");
 
 import MoviesList from "@/components/Movie/MoviesList";
 
@@ -23,25 +23,18 @@ export default {
   },
   data() {
     return {
-      movies: [],
       loading: false,
-      meta: {
-        page: 0,
-      },
     };
   },
+  computed: {
+    ...mapState(["movies"]),
+  },
   methods: {
-    async fetchListMovies() {
-      const result = await moviesRepo.search({
-        page: this.meta.page,
-      });
-
-      this.movies = [...this.movies, ...result.data.movies];
-      this.meta = result.data.meta;
-    },
+    ...mapActions(["search", "increaseMetaPage"]),
     loadMore() {
-      this.meta.page += 1;
-      this.fetchListMovies();
+      // this.meta.page += 1;
+      this.increaseMetaPage();
+      this.search();
     },
   },
 };

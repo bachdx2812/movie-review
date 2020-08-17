@@ -5,6 +5,10 @@
     <span>{{ movie.description }}</span>
     <span>{{ movie.like_count }}</span>
     <span>{{ movie.dislike_count }}</span>
+    <span>
+      <button @click="like">like</button>
+      <button @click="dislike">dislike</button>
+    </span>
   </div>
 </template>
 
@@ -15,6 +19,10 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  methods: {
+    async like() {},
+    async dislike() {},
   },
 };
 </script>
