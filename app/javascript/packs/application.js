@@ -19,6 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
     store: store,
     components: {
       PageHome: () => import("@/pages/PageHome"),
+      AppHeader: () => import("@/components/Shared/AppHeader"),
+      LoginModal: () => import("@/components/Shared/Login/LoginModal"),
     },
   });
 });

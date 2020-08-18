@@ -11,13 +11,13 @@
             :id="`like_${movie.id}`"
             class="icon like"
             :class="{ active: movie.rate == 'like' }"
-            @click="like(movie.id)"
+            @click="likeMovie(movie.id)"
           >{{ movie.like_count }}</span>
           <span
            :id="`dislike_${movie.id}`"
             class="icon dislike"
             :class="{ active: movie.rate == 'dislike' }"
-            @click="dislike(movie.id)"
+            @click="dislikeMovie(movie.id)"
           >{{ movie.dislike_count }}</span>
         </div>
         <div class="movie-date">{{ movie.published_at | dateFilter }}</div>
@@ -64,6 +64,28 @@ export default {
   },
   methods: {
     ...mapActions(["like", "dislike"]),
+    async likeMovie(movieId) {
+      try {
+        await this.like(movieId);
+      } catch (e) {
+        switch (e.response?.status) {
+          case 403:
+            this.$root.$refs.loginModal.show();
+            break;
+        }
+      }
+    },
+    async dislikeMovie(movieId) {
+      try {
+        await this.dislike(movieId);
+      } catch (e) {
+        switch (e.response?.status) {
+          case 403:
+            this.$root.$refs.loginModal.show();
+            break;
+        }
+      }
+    },
   },
 };
 </script>
