@@ -11,9 +11,12 @@ Vue.use(infiniteScroll);
 require.context("../images", true);
 require.context("../fonts", true);
 
+import store from "@/store";
+
 document.addEventListener("DOMContentLoaded", () => {
   const vue = new Vue({
     el: "#app",
+    store: store,
     components: {
       PageHome: () => import("@/pages/PageHome"),
     },

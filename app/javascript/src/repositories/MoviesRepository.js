@@ -13,4 +13,10 @@ export default {
       paramsSerializer,
     });
   },
+  like(movieId) {
+    return request.post(`${resource}/${movieId}/like`);
+  },
+  dislike(movieId) {
+    return request.post(`${resource}/${movieId}/dislike`);
+  },
 };

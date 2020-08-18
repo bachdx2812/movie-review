@@ -14,9 +14,9 @@ ActiveRecord::Schema.define(version: 0) do
 
   create_table "movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "youtube_url", null: false
+    t.string "youtube_video_id", null: false
     t.string "title", default: "", null: false
-    t.string "description"
+    t.text "description"
     t.datetime "published_at"
     t.string "thumbnail"
     t.integer "like_count", default: 0, null: false

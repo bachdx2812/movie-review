@@ -1,40 +1,52 @@
-ActiveRecord::Base.transaction do
-  User.destroy_all
-  Movie.destroy_all
-  RateHistory.destroy_all
+User.destroy_all
+Movie.destroy_all
+RateHistory.destroy_all
 
+ActiveRecord::Base.transaction do
   i = 1
 
   while i <= 100 do
     user = User.create!(
-      username: "user#{i}",
+      username: "#{Faker::Internet.username}#{i}",
       password: "123456",
     )
 
     movie = Movie.create!(
       user_id: user.id,
-      title: "movie#{i}",
-      description: "desc of movie #{i}",
-      youtube_url: "https://www.youtube.com/",
-      thumbnail: "https://via.placeholder.com/640x480.png?text=movie#{i}",
+      title: Faker::Book.title,
+      description: Faker::Lorem.paragraph(sentence_count: 10),
+      youtube_video_id: "wSSE0thGmcc",
+      thumbnail: Faker::LoremFlickr.image(size: "640x480"),
       published_at: Time.now,
       dislike_count: 0,
       like_count: 0,
     )
 
-    i += 1
-  end
-
-  movies = Movie.all
-  users = User.all
-
-  movies.each do |movie|
-    users.each do |user|
-      RateHistory.create!(
+    RateHistory.create!(
         user_id: user.id,
         movie_id: movie.id,
         rate_type: [0, 1].sample,
       )
-    end
+
+    movie.update_counter!
+
+    i += 1
   end
 end
+
+# movies = Movie.all
+# users = User.all
+
+# ActiveRecord::Base.transaction do
+#   movies.each do |movie|
+#     users.each do |user|
+#       RateHistory.create!(
+#         user_id: user.id,
+#         movie_id: movie.id,
+#         rate_type: [0, 1].sample,
+#       )
+#     end
+
+#     movie.update_counter!
+#   end
+# end

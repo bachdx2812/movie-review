@@ -18,6 +18,10 @@ class RateHistory < ApplicationRecord
   belongs_to :user
   belongs_to :movie
 
+  validates :movie_id, uniqueness: {
+    scope: :user_id,
+  }, on: :create
+
   enum rate_type: {
     dislike: 0,
     like: 1,

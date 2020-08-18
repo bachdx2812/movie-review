@@ -112,6 +112,8 @@ GEM
     enum_help (0.0.17)
       activesupport (>= 3.0.0)
     erubi (1.9.0)
+    faker (2.13.0)
+      i18n (>= 1.6, < 2)
     fasterer (0.8.3)
       colorize (~> 0.7)
       ruby_parser (>= 3.14.1)
@@ -319,6 +321,7 @@ DEPENDENCIES
   devise
   dotenv-rails (~> 2.1, >= 2.1.1)
   enum_help
+  faker
   fasterer
   foreman
   jbuilder (~> 2.7)
