@@ -77,6 +77,7 @@ export default {
         this.data = response.data;
         this.sharable = true;
       } catch (e) {
+        this.data = null;
         this.sharable = false;
       }
     },
