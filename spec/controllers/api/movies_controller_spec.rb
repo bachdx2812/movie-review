@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "Movies movie" do
-  context "GET movies", :type => :request do
+RSpec.describe "Movies API" do
+  context "GET list", :type => :request do
     before {
       i = 1
       while i <= 20 do
@@ -34,54 +34,105 @@ RSpec.describe "Movies movie" do
     end
   end
 
-  context "logged in user", :type => :request do
+  context "when logged in user", :type => :request do
     login_user
-    it "first time like must be success" do
-      movie = FactoryBot.create(:movie)
-      post "/api/movies/#{movie.id}/like"
+    context "rate movie" do
+      it "first time like must be success" do
+        movie = FactoryBot.create(:movie)
+        post "/api/movies/#{movie.id}/like"
 
-      expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:success)
+      end
+
+      it "first time dislike must be success" do
+        movie = FactoryBot.create(:movie)
+        post "/api/movies/#{movie.id}/dislike"
+
+        expect(response).to have_http_status(:success)
+      end
+
+      it "duplicate like must be return unprocessable_entity" do
+        movie = FactoryBot.create(:movie)
+        post "/api/movies/#{movie.id}/like"
+        expect(response).to have_http_status(:success)
+
+        post "/api/movies/#{movie.id}/like"
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it "duplicate dislike must be return unprocessable_entity" do
+        movie = FactoryBot.create(:movie)
+        post "/api/movies/#{movie.id}/dislike"
+        expect(response).to have_http_status(:success)
+
+        post "/api/movies/#{movie.id}/dislike"
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
 
-    it "first time dislike must be success" do
-      movie = FactoryBot.create(:movie)
-      post "/api/movies/#{movie.id}/dislike"
+    context "share movie" do
+      it "preview success with vide info" do
+        get "/api/movies/youtube", params: { url: ENV["VALID_YOUTUBE_URL"] }
 
-      expect(response).to have_http_status(:success)
-    end
+        data = JSON.parse(response.body)
 
-    it "duplicate like must be return unprocessable_entity" do
-      movie = FactoryBot.create(:movie)
-      post "/api/movies/#{movie.id}/like"
-      expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:success)
+        expect(data["title"]).to eq(ENV["VIDEO_TITLE"])
+        expect(data["description"]).not_to be_nil
+        expect(data["published_at"]).not_to be_nil
+        expect(data["youtube_video_id"]).not_to be_nil
+        expect(data["thumbnail"]).not_to be_nil
+      end
 
-      post "/api/movies/#{movie.id}/like"
-      expect(response).to have_http_status(:unprocessable_entity)
-    end
+      it "create must success" do
+        get "/api/movies/youtube", params: { url: ENV["VALID_YOUTUBE_URL"] }
 
-    it "duplicate dislike must be return unprocessable_entity" do
-      movie = FactoryBot.create(:movie)
-      post "/api/movies/#{movie.id}/dislike"
-      expect(response).to have_http_status(:success)
+        video_info = JSON.parse(response.body)
 
-      post "/api/movies/#{movie.id}/dislike"
-      expect(response).to have_http_status(:unprocessable_entity)
+        post "/api/movies", params: video_info
+
+        movie = Movie.first
+        expect(response).to have_http_status(:success)
+        expect(video_info["title"]).to eq(movie.title)
+        expect(video_info["description"]).to eq(movie.description)
+        expect(video_info["youtube_video_id"]).to eq(movie.youtube_video_id)
+        expect(video_info["thumbnail"]).to eq(movie.thumbnail)
+        expect(video_info["published_at"].to_date).to eq(movie.published_at.to_date)
+      end
     end
   end
 
-  context "not logged in user", :type => :request do
-    it "like must be return unauthorized" do
-      movie = FactoryBot.create(:movie)
-      post "/api/movies/#{movie.id}/like"
+  context "when not logged in user", :type => :request do
+    context "rate movie" do
+      it "like must be return unauthorized" do
+        movie = FactoryBot.create(:movie)
+        post "/api/movies/#{movie.id}/like"
 
-      expect(response).to have_http_status(:unauthorized)
+        expect(response).to have_http_status(:unauthorized)
+      end
+
+      it "dislike must be return unauthorized" do
+        movie = FactoryBot.create(:movie)
+        post "/api/movies/#{movie.id}/dislike"
+
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
 
-    it "dislike must be return unauthorized" do
-      movie = FactoryBot.create(:movie)
-      post "/api/movies/#{movie.id}/dislike"
+    context "share movie" do
+      it "preview fail cause unauthorized" do
+        get "/api/movies/youtube", params: { url: ENV["VALID_YOUTUBE_URL"] }
 
-      expect(response).to have_http_status(:unauthorized)
+        expect(response).to have_http_status(:unauthorized)
+      end
+
+      it "create fail cause unauthorized" do
+        video_info = { title: "test", youtube_video_id: "test", thumbnail: "test", published_at: Time.now}
+
+        post "/api/movies", params: video_info
+        expect(response).to have_http_status(:unauthorized)
+      end
     end
   end
 end
+
