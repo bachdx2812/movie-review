@@ -52,5 +52,13 @@ Rails.application.routes.draw do
         post :dislike
       end
     end
+
+    resources :users, only: [] do
+      collection do
+        post :register
+        post :login
+        delete :logout
+      end
+    end
   end
 end
