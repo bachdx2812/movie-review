@@ -15,7 +15,7 @@ RSpec.feature "Rate action", :type => :feature do
     fill_in "password", :with => @user.password
     click_button "Login"
 
-    expect(page).to have_text("UPLOAD MOVIE")
+    expect(page).to have_text("SHARE MOVIE")
     # Logout
     find("small", text: "HI").click
     find("a", text: "LOGOUT").click
