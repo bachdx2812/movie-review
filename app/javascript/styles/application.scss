@@ -274,3 +274,94 @@ body {
   color: #f27474;
   border: 1px solid #f27474;
 }
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  background: white;
+  align-items: center;
+  height: 70px;
+  z-index: 1;
+  box-shadow: 0px 1px 10px 4px #0000000a;
+
+  .logo {
+    width: 70px;
+    height: 70px;
+    background: url("../images/cat.svg") no-repeat center;
+    background-size: 40px;
+  }
+
+  .menu {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      text-transform: uppercase;
+      position: relative;
+      padding: 0 20px;
+      line-height: 70px;
+      cursor: pointer;
+
+      small {
+        color: rgba($color: #202121, $alpha: 0.5);
+      }
+
+      a {
+        text-decoration: none;
+        color: #202121;
+        cursor: pointer;
+      }
+
+      .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        background: white;
+        flex-flow: column nowrap;
+        box-shadow: 0px 1px 10px 4px #0000000a;
+      }
+
+      &:hover {
+        .dropdown-menu {
+          display: flex;
+
+          li {
+            justify-content: flex-end;
+          }
+        }
+      }
+
+      &.upload {
+        background: #49c5b6;
+
+        a {
+          color: white;
+        }
+
+        &::after {
+          display: inline-block;
+          content: "";
+          width: 20px;
+          height: 20px;
+          margin-left: 10px;
+          background: url("../images/up-arrow.svg") no-repeat center;
+          background-size: 20px;
+        }
+      }
+    }
+  }
+}
+
+.app-body {
+  margin-top: 100px;
+}
