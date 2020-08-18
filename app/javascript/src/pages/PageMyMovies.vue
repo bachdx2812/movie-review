@@ -27,12 +27,20 @@ export default {
       loading: false,
       page: 0,
       movies: [],
+      stopScroll: false,
     };
   },
   methods: {
     async search() {
+      if (this.stopScroll) return;
       const result = await Movies.getMyMovies({ page: this.page });
       this.movies = [...this.movies, ...result.data.movies];
+      if (
+        !result.data.meta?.per_page ||
+        result.data.movies.length < result.data.meta.per_page
+      ) {
+        this.stopScroll = true;
+      }
     },
     loadMore() {
       this.page++;

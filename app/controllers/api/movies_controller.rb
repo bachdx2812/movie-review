@@ -80,9 +80,11 @@ module Api
     def my
       collection = current_user.movies.includes(:rate_histories).order(id: :desc)
 
+      per_page = params[:perPage] || PER_PAGE
+
       pagy, movies = pagy(
         collection,
-        items: params[:perPage] || PER_PAGE,
+        items: per_page,
         page: params[:page],
       )
 
@@ -92,7 +94,8 @@ module Api
              meta: {
                total: pagy.count, page: pagy.page,
                from: pagy.from, to: pagy.to,
-               series: pagy.series, pages: pagy.pages
+               series: pagy.series, pages: pagy.pages,
+               per_page: per_page
              }
     rescue StandardError
       return render json: { movies: [] }
