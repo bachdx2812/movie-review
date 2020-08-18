@@ -10,6 +10,7 @@ const store = new Vuex.Store({
   namespace: true,
   plugins: [createPersistedState({
     key: "movies-data-store",
+    paths: ["users"]
   })],
   modules: {
     movies,
