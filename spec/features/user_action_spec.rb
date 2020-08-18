@@ -7,25 +7,30 @@ RSpec.feature "Rate action", :type => :feature do
   end
 
   scenario "Login & Logout" do
-    visit "/users/sign_in"
+    # Login
+    visit "/"
+    find("li", text: "LOGIN/REGISTER").click
 
-    fill_in "user_username", :with => "test"
-    fill_in "user_password", :with => "1"
-    click_button "Log in"
+    fill_in "username", :with => @user.username
+    fill_in "password", :with => @user.password
+    click_button "Login"
 
-    expect(page).to have_text("Signed in successfully.")
-
-    click_link "Logout"
-    expect(page).to have_text("Signed out successfully.")
+    expect(page).to have_text("UPLOAD MOVIE")
+    # Logout
+    find("small", text: "HI").click
+    find("a", text: "LOGOUT").click
+    expect(page).to have_text("LOGIN/REGISTER")
   end
 
   scenario "Like video" do
-    visit "/users/sign_in"
+    # Login
+    visit "/"
+    find("li", text: "LOGIN/REGISTER").click
+    fill_in "username", :with => @user.username
+    fill_in "password", :with => @user.password
+    click_button "Login"
 
-    fill_in "user_username", :with => "test"
-    fill_in "user_password", :with => "1"
-    click_button "Log in"
-
+    # Like
     find("#like_#{@movie.id}").click
     expect(page).to have_css(".active")
 
@@ -36,11 +41,12 @@ RSpec.feature "Rate action", :type => :feature do
   end
 
   scenario "Dislike video" do
-    visit "/users/sign_in"
-
-    fill_in "user_username", :with => "test"
-    fill_in "user_password", :with => "1"
-    click_button "Log in"
+    # Login
+    visit "/"
+    find("li", text: "LOGIN/REGISTER").click
+    fill_in "username", :with => @user.username
+    fill_in "password", :with => @user.password
+    click_button "Login"
 
     find("#dislike_#{@movie.id}").click
     expect(page).to have_css(".active")
