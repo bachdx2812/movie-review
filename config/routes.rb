@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       collection do
         get :search
         get :youtube
+        get :my
       end
 
       member do
@@ -62,4 +63,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :my_movies, only: [:index]
 end

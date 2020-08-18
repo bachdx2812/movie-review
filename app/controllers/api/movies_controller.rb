@@ -77,6 +77,30 @@ module Api
       render json: e.message, status: :internal_server_error
     end
 
+    def my
+      collection = current_user.movies.includes(:rate_histories).order(id: :desc)
+
+      per_page = params[:perPage] || PER_PAGE
+
+      pagy, movies = pagy(
+        collection,
+        items: per_page,
+        page: params[:page],
+      )
+
+      render json: movies,
+             adapter: :json,
+             each_serializer: Home::HomeMoviesSerializer,
+             meta: {
+               total: pagy.count, page: pagy.page,
+               from: pagy.from, to: pagy.to,
+               series: pagy.series, pages: pagy.pages,
+               per_page: per_page
+             }
+    rescue StandardError
+      return render json: { movies: [] }
+    end
+
     private
 
     def movie_params
