@@ -1,7 +1,7 @@
 <template>
   <div class="app-header">
     <div class="box-left">
-      <div class="logo"></div>
+      <a class="logo" href="/"></a>
     </div>
     <div class="box-right">
       <ul class="menu" v-if="loggedIn">
@@ -12,7 +12,7 @@
           </span>
           <ul class="dropdown-menu">
             <li>
-              <a href="/uploaded">My Movies</a>
+              <a href="/my_movies">My Movies</a>
             </li>
             <li>
               <a href @click="executeLogout()">Logout</a>

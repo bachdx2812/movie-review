@@ -20,7 +20,7 @@
         </div>
         <div class="movie-date">{{ movie.published_at | dateFilter }}</div>
       </div>
-      <div class="movie-author">
+      <div class="movie-author" v-if="!readonly">
         <div class="movie-author-avatar"></div>
         <div class="movie-author-name">
           by
@@ -45,6 +45,7 @@ export default {
   },
   props: {
     movie: Object,
+    readonly: Boolean,
   },
   data() {
     return {
@@ -64,7 +65,7 @@ export default {
     ...mapActions(["like", "dislike"]),
     async likeMovie(movieId) {
       try {
-        if (this.movie.rate == "like") return;
+        if (this.movie.rate == "like" || this.readonly) return;
         await this.like(movieId);
       } catch (e) {
         switch (e.response?.status) {
@@ -76,7 +77,7 @@ export default {
     },
     async dislikeMovie(movieId) {
       try {
-        if (this.movie.rate == "dislike") return;
+        if (this.movie.rate == "dislike" || this.readonly) return;
         await this.dislike(movieId);
       } catch (e) {
         switch (e.response?.status) {

@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       AppHeader: () => import("@/components/Shared/AppHeader"),
       LoginModal: () => import("@/components/Shared/Login/LoginModal"),
       UploadModal: () => import("@/components/Shared/UploadModal"),
+      PageMyMovies: () => import("@/pages/PageMyMovies"),
     },
   });
 });
