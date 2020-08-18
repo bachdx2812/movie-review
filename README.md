@@ -19,3 +19,21 @@ bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1
    How to get your google API key: https://console.developers.google.com/
 
 5. Actually we can make an service to crawl data from youtube using `capybara` but will take more time and the process will not be fast, not a good idea though
+
+# Rspec
+1. You need an `.env.test.local` file, duplicate `.env.test.local.example` and edit to fit your test environment
+2. Create test database
+
+```
+bundle exec rake db:create RAILS_ENV=test
+```
+
+3. Apply migrations for test database
+
+```
+bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1 RAILS_ENV=test
+```
+4. Rspec command
+```
+rspec -fd 
+```

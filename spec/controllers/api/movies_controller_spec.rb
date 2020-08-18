@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "MoviesController" do
+RSpec.describe "Movies movie" do
   context "GET movies", :type => :request do
     before {
       i = 1
