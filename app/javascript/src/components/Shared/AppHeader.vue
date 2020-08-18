@@ -20,7 +20,7 @@
           </ul>
         </li>
         <li class="upload">
-          <a @click.prevent="showUploadModal()">Upload Movie</a>
+          <a @click.prevent="showUploadModal()">Share Movie</a>
         </li>
       </ul>
       <ul class="menu" v-else>
@@ -50,7 +50,9 @@ export default {
     showModal() {
       this.$root.$refs.loginModal.show();
     },
-    showUploadModal() {},
+    showUploadModal() {
+      this.$root.$refs.uploadModal.show();
+    },
   },
 };
 </script>

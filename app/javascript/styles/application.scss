@@ -29,6 +29,22 @@ body {
   flex-wrap: wrap;
   margin-bottom: 30px;
 
+  &:hover {
+    .movie-detail {
+      overflow: auto;
+    }
+
+    @supports (overflow: overlay) {
+      .movie-detail {
+        overflow: overlay;
+      }
+    }
+  }
+
+  &.column {
+    flex-direction: column;
+  }
+
   .movie-thumbnail {
     width: 400px;
     padding-top: 300px;
@@ -64,6 +80,7 @@ body {
     display: flex;
     flex-flow: column nowrap;
     padding: 20px;
+    overflow: hidden;
 
     .movie-title {
       font-weight: bold;
@@ -179,6 +196,10 @@ body {
     position: relative;
     z-index: 1;
     animation: modalAppear 0.2s ease-in backwards;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column;
   }
 
   .modal-shadow {
@@ -211,49 +232,8 @@ body {
   }
 
   .modal-body {
-    padding: 0 30px 50px;
-
-    .form {
-      display: flex;
-      flex-flow: column nowrap;
-
-      .input {
-        width: 100%;
-        display: block;
-        height: 60px;
-        padding: 0 15px;
-        background-color: #fff;
-        border: 1px solid #dbe0df;
-        transition: all 0.3s ease-in-out;
-        font-size: inherit;
-        font-family: inherit;
-        outline: none;
-        box-shadow: none;
-        margin-bottom: 20px;
-      }
-
-      .button {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 16px;
-        height: 54px;
-        padding: 15px 35px;
-        outline: none;
-        box-shadow: none;
-        background-color: #49c5b6;
-        border: 1px solid #49c5b6;
-        color: #ffffff;
-        cursor: pointer;
-        white-space: nowrap;
-        text-transform: uppercase;
-        transition: all 0.25s ease-in-out;
-
-        &:hover {
-          opacity: 0.75;
-        }
-      }
-    }
+    flex: 1;
+    overflow: auto;
   }
 
   @keyframes modalAppear {
@@ -364,4 +344,60 @@ body {
 
 .app-body {
   margin-top: 100px;
+}
+
+.form {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  padding: 30px;
+}
+
+.input {
+  width: 100%;
+  display: block;
+  height: 60px;
+  padding: 0 15px;
+  background-color: #fff;
+  border: 1px solid #dbe0df;
+  transition: all 0.3s ease-in-out;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  box-shadow: none;
+  margin-bottom: 20px;
+}
+
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  height: 60px;
+  padding: 15px 35px;
+  outline: none;
+  box-shadow: none;
+  background-color: #49c5b6;
+  border: 1px solid #49c5b6;
+  color: #ffffff;
+  cursor: pointer;
+  white-space: nowrap;
+  text-transform: uppercase;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  &:disabled {
+    opacity: 0.25;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+h2 {
+  margin-top: 0;
 }

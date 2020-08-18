@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.integer "dislike_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_movies_on_userid", unique: true
+    t.index ["user_id"], name: "index_movies_on_userid"
   end
 
   create_table "rate_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

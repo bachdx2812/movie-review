@@ -19,4 +19,12 @@ export default {
   dislike(movieId) {
     return request.post(`${resource}/${movieId}/dislike`);
   },
+  getYoutubeInfo(url) {
+    return request.get(`${resource}/youtube`, {
+      params: { url }
+    })
+  },
+  upload(data) {
+    return request.post(resource, data);
+  }
 };

@@ -66,6 +66,7 @@ export default {
     ...mapActions(["like", "dislike"]),
     async likeMovie(movieId) {
       try {
+        if (this.movie.rate == "like") return;
         await this.like(movieId);
       } catch (e) {
         switch (e.response?.status) {
@@ -77,6 +78,7 @@ export default {
     },
     async dislikeMovie(movieId) {
       try {
+        if (this.movie.rate == "dislike") return;
         await this.dislike(movieId);
       } catch (e) {
         switch (e.response?.status) {

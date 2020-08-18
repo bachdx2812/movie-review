@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
       PageHome: () => import("@/pages/PageHome"),
       AppHeader: () => import("@/components/Shared/AppHeader"),
       LoginModal: () => import("@/components/Shared/Login/LoginModal"),
+      UploadModal: () => import("@/components/Shared/UploadModal"),
     },
   });
 });
