@@ -1,4 +1,4 @@
-RSpec.describe "GetIdFromUrl", type: :service, skip: true do
+RSpec.describe "GetIdFromUrl", type: :service do
   describe "Get video id from url successs" do
     it "should return id" do
       service = Youtube::GetIdFromUrl.new(ENV["VALID_YOUTUBE_URL"])

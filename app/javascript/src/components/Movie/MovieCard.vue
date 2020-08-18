@@ -8,11 +8,13 @@
       <div class="movie-subtitle">
         <div class="movie-likes">
           <span
+            :id="`like_${movie.id}`"
             class="icon like"
             :class="{ active: movie.rate == 'like' }"
             @click="like(movie.id)"
           >{{ movie.like_count }}</span>
           <span
+           :id="`dislike_${movie.id}`"
             class="icon dislike"
             :class="{ active: movie.rate == 'dislike' }"
             @click="dislike(movie.id)"

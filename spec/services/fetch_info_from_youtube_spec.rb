@@ -1,4 +1,4 @@
-RSpec.describe "FetchInfoFromYoutube", type: :service, skip: true do
+RSpec.describe "FetchInfoFromYoutube", type: :service do
   describe "Fetch video info from youtube success" do
     it "should return video info with valid url & API Key" do
       service = Youtube::FetchInfoFromYoutube.new(ENV["VALID_YOUTUBE_URL"])
