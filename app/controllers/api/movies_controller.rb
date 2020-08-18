@@ -63,5 +63,30 @@ module Api
         status: :unprocessable_entity,
       )
     end
+
+    def youtube
+      result = Youtube::FetchInfoFromYoutube.new(params[:url]).execute
+      render json: result.to_json, status: :ok
+    rescue FetchVideoYoutubeError => e
+      render json: e.message, status: :internal_server_error
+    end
+
+    def create
+      current_user.movies.create!(movie_params)
+    rescue StandardError => e
+      render json: e.message, status: :internal_server_error
+    end
+
+    private
+
+    def movie_params
+      params.permit(
+        :title,
+        :description,
+        :published_at,
+        :thumbnail,
+        :youtube_video_id,
+      )
+    end
   end
 end

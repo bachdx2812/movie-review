@@ -10,5 +10,5 @@ create_table "movies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=
 
   t.timestamps
 
-  t.index ["user_id"], name: "index_movies_on_userid", unique: true
+  t.index ["user_id"], name: "index_movies_on_userid"
 end

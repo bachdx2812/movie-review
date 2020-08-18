@@ -42,9 +42,10 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   namespace :api do
-    resources :movies, only: [] do
+    resources :movies, only: [:create] do
       collection do
         get :search
+        get :youtube
       end
 
       member do
