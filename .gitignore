@@ -36,3 +36,6 @@ yarn-debug.log*
 .yarn-integrity
 .env
 coverage
+
+/config/credentials/production.key
+/db-data

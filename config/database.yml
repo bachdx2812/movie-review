@@ -50,6 +50,7 @@ test:
 #
 production:
   <<: *default
+  host: <%= ENV['DB_HOST'] %>
   database: movie_review_production
   username: movie_review
   password: <%= ENV['MOVIE_REVIEW_DATABASE_PASSWORD'] %>
