@@ -42,9 +42,11 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   namespace :api do
-    resources :movies, only: [] do
+    resources :movies, only: [:create] do
       collection do
         get :search
+        get :youtube
+        get :my
       end
 
       member do
@@ -52,5 +54,15 @@ Rails.application.routes.draw do
         post :dislike
       end
     end
+
+    resources :users, only: [] do
+      collection do
+        post :register
+        post :login
+        delete :logout
+      end
+    end
   end
+
+  resources :my_movies, only: [:index]
 end

@@ -1,6 +1,6 @@
 <template>
   <ul class="movie-list">
-    <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" />
+    <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" :readonly="readonly" />
   </ul>
 </template>
 
@@ -16,6 +16,11 @@ export default {
       type: Array,
       required: true,
       default: () => [],
+    },
+    readonly: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 };

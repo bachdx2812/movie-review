@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h1>Movies List</h1>
+  <div class="app-body">
     <div
       v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
