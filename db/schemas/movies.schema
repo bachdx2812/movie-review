@@ -1,4 +1,4 @@
-create_table "movies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+create_table "movies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
   t.integer :user_id, null: false
   t.string :youtube_video_id, null: false
   t.string :title, null: false, default: ""

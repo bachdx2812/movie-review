@@ -1,6 +1,7 @@
 <template>
   <div class="modal" v-if="visible">
     <div class="modal-content">
+      <div class="modal-close" @click="hide">x</div>
       <div class="modal-header">
         <form class="form" @submit.prevent="getVideoInfo">
           <h2>Enter Youtube URL</h2>
@@ -12,9 +13,9 @@
         </form>
       </div>
 
-      <div class="modal-body" v-if="data">
+      <div class="modal-body">
         <div class="form">
-          <div class="movie-item column">
+          <div class="movie-item column" v-if="data">
             <div class="movie-thumbnail">
               <img :src="data.thumbnail" />
             </div>
@@ -25,6 +26,11 @@
               </div>
               <div class="movie-description">{{ data.description }}</div>
             </div>
+          </div>
+          <div class="placeholder" v-else>
+            <div class="big"></div>
+            <div class="small"></div>
+            <div class="small"></div>
           </div>
         </div>
       </div>
@@ -64,12 +70,14 @@ export default {
   methods: {
     show() {
       this.visible = true;
+      document.body.style.overflow = "hidden";
     },
     hide() {
       this.visible = false;
       this.url = "";
       this.data = null;
       this.sharable = false;
+      document.body.style.overflow = "auto";
     },
     async getVideoInfo() {
       try {
@@ -100,7 +108,7 @@ export default {
 
 .movie-thumbnail {
   width: 100%;
-  padding-top: 75%;
+  padding-top: 54%;
   background: black;
 
   &::before {
@@ -112,9 +120,66 @@ export default {
   padding: 15px 0;
   width: 100%;
   height: auto;
+
+  .movie-description {
+    display: block;
+  }
+}
+
+.modal-body {
+  .form {
+    padding-top: 0;
+  }
 }
 
 .input {
   margin: 0;
+}
+
+.placeholder {
+  div {
+    margin-bottom: 10px;
+    border-radius: 15px;
+    background: #efefef;
+
+    &.big {
+      width: 100%;
+      padding-top: 54%;
+    }
+
+    &.small {
+      width: 50%;
+      height: 16px;
+    }
+  }
+}
+
+@media (max-width: 799px) {
+  .movie-item {
+    padding: 0;
+    max-width: none;
+  }
+}
+
+@media (max-width: 599px) {
+  .modal-content {
+    height: 80vh;
+  }
+
+  .form {
+    padding: 10px;
+  }
+
+  .input {
+    font-size: 14px;
+    height: 40px;
+    padding: 0 10px;
+  }
+
+  .button {
+    padding: 10px;
+    height: 40px;
+    font-size: 14px;
+  }
 }
 </style>

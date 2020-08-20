@@ -1,6 +1,7 @@
 <template>
   <div class="modal" v-if="visible">
     <div class="modal-content">
+      <div class="modal-close" @click="hide">x</div>
       <div class="modal-header">
         <div class="modal-header-tab" :class="{ active: login }" @click="login = true">Login</div>
         <div class="modal-header-tab" :class="{ active: !login }" @click="login = false">Register</div>
@@ -33,9 +34,11 @@ export default {
     show() {
       this.visible = true;
       this.login = true;
+      document.body.style.overflow = "hidden";
     },
     hide() {
       this.visible = false;
+      document.body.style.overflow = "auto";
     }
   }
 };

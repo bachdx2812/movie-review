@@ -18,12 +18,6 @@ module Api
       render json: e.message, status: :internal_server_error
     end
 
-    def logout
-      reset_session
-
-      render json: :ok
-    end
-
     private
 
     def user_params
