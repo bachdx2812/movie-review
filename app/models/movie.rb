@@ -16,7 +16,7 @@
 #
 # Indexes
 #
-#  index_movies_on_userid  (user_id) UNIQUE
+#  index_movies_on_userid  (user_id)
 #
 
 class Movie < ApplicationRecord

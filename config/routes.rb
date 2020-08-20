@@ -13,8 +13,15 @@
 #                                       POST   /users(.:format)                                                                         devise/registrations#create
 #                                  root GET    /                                                                                        home#index
 #                     search_api_movies GET    /api/movies/search(.:format)                                                             api/movies#search
+#                    youtube_api_movies GET    /api/movies/youtube(.:format)                                                            api/movies#youtube
+#                         my_api_movies GET    /api/movies/my(.:format)                                                                 api/movies#my
 #                        like_api_movie POST   /api/movies/:id/like(.:format)                                                           api/movies#like
 #                     dislike_api_movie POST   /api/movies/:id/dislike(.:format)                                                        api/movies#dislike
+#                            api_movies POST   /api/movies(.:format)                                                                    api/movies#create
+#                    register_api_users POST   /api/users/register(.:format)                                                            api/users#register
+#                       login_api_users POST   /api/users/login(.:format)                                                               api/users#login
+#                      logout_api_users DELETE /api/users/logout(.:format)                                                              api/users#logout
+#                             my_movies GET    /my_movies(.:format)                                                                     my_movies#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
 #         rails_sendgrid_inbound_emails POST   /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                  action_mailbox/ingresses/sendgrid/inbound_emails#create

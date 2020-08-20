@@ -37,3 +37,5 @@ yarn-debug.log*
 coverage
 .env
 .env.test.local
+coverage
+**/.DS_Store

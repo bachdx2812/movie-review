@@ -1,7 +1,7 @@
 <template>
   <li class="movie-item">
     <div class="movie-thumbnail" @click="showPreview">
-      <img :src="movie.thumbnail" />
+      <img v-lazy="movie.thumbnail" />
     </div>
     <div class="movie-detail">
       <div class="movie-title">{{ movie.title }}</div>
@@ -94,8 +94,10 @@ export default {
       document.body.style.overflow = "hidden";
     },
     hidePreview() {
-      this.showVideo = false;
-      document.body.style.overflow = "auto";
+      setTimeout(() => {
+        this.showVideo = false;
+        document.body.style.overflow = "auto";
+      }, 100);
     },
   },
 };
