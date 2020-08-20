@@ -1,5 +1,5 @@
 <template>
-  <form class="form" @submit.prevent="executeRegister">
+  <form class="form" @submit.prevent="register">
     <h2>Register</h2>
     <div class="error-message" v-if="error">{{ error }}</div>
     <input class="input" v-model="username" placeholder="Username" required />
@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("users");
+import { RepositoryFactory } from "@/repositories/RepositoryFactory";
+const Users = new RepositoryFactory.get("users");
 
 export default {
   data() {
@@ -31,7 +31,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["register"]),
     validatePassword() {
       if (this.password != this.confirm_password) {
         this.$refs.confirm_password.setCustomValidity(
@@ -41,14 +40,14 @@ export default {
         this.$refs.confirm_password.setCustomValidity("");
       }
     },
-    async executeRegister() {
+    async register() {
       try {
         this.error = "";
-        await this.register({
+        await Users.register({
           username: this.username,
           password: this.password,
         });
-        this.$root.$refs.loginModal.hide();
+        window.location.reload();
       } catch(e) {
         this.error = "Register failed!";
       }

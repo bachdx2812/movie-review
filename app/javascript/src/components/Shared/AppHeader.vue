@@ -4,7 +4,7 @@
       <a class="logo" href="/"></a>
     </div>
     <div class="box-right">
-      <ul class="menu" v-if="loggedIn">
+      <ul class="menu" v-if="signedIn">
         <li>
           <span>
             <small>Hi</small>
@@ -15,7 +15,7 @@
               <a href="/my_movies">My Movies</a>
             </li>
             <li>
-              <a href @click="executeLogout()">Logout</a>
+              <a href="/users/sign_out" data-method="delete">Logout</a>
             </li>
           </ul>
         </li>
@@ -31,22 +31,12 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapActions, mapState } = createNamespacedHelpers("users");
-
 export default {
   props: {
-    user: Object,
-  },
-  computed: {
-    ...mapState(["loggedIn", "username"]),
+    signedIn: Boolean,
+    username: String,
   },
   methods: {
-    ...mapActions(["logout"]),
-    async executeLogout() {
-      await this.logout();
-      window.location.reload();
-    },
     showModal() {
       this.$root.$refs.loginModal.show();
     },

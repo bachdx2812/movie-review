@@ -12,7 +12,7 @@
 
 <body>
   <div id="app">
-    <%= app_header %>
+    <%= app_header(user_signed_in?, current_user) %>
     <%= yield %>
     <%= login_modal %>
     <%= upload_modal %>
