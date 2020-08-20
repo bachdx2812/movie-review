@@ -1,7 +1,7 @@
 <template>
   <li class="movie-item">
     <div class="movie-thumbnail" @click="showPreview">
-      <img :src="movie.thumbnail" />
+      <img v-lazy="movie.thumbnail" />
     </div>
     <div class="movie-detail">
       <div class="movie-title">{{ movie.title }}</div>
