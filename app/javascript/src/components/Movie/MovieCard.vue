@@ -1,6 +1,6 @@
 <template>
   <li class="movie-item">
-    <div class="movie-thumbnail" @click="showVideo = true">
+    <div class="movie-thumbnail" @click="showPreview">
       <img :src="movie.thumbnail" />
     </div>
     <div class="movie-detail">
@@ -29,7 +29,7 @@
       </div>
       <div class="movie-description">{{ movie.description }}</div>
     </div>
-    <MoviePreview :url="movie.embed_url" v-if="showVideo" @close="showVideo = false" />
+    <MoviePreview :movie="movie" v-if="showVideo" @close="hidePreview" />
   </li>
 </template>
 
@@ -86,6 +86,14 @@ export default {
             break;
         }
       }
+    },
+    showPreview() {
+      this.showVideo = true;
+      document.body.style.overflow = "hidden";
+    },
+    hidePreview() {
+      this.showVideo = false;
+      document.body.style.overflow = "auto";
     },
   },
 };
