@@ -11,17 +11,19 @@ module Api
     end
 
     def register
-      user = User.create!(user_params)
-      sign_in :user, user
+      @user = User.new(user_params)
+      @user.save!
+
+      sign_in :user, @user
       render json: :ok
     rescue StandardError => e
-      render json: e.message, status: :internal_server_error
+      render json: @user.errors.to_hash(true), status: :unprocessable_entity
     end
 
     private
 
     def user_params
-      params.permit(:username, :password)
+      params.permit(:username, :password, :password_confirmation)
     end
   end
 end

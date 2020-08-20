@@ -3,16 +3,19 @@
     <h2>Register</h2>
     <div class="error-message" v-if="error">{{ error }}</div>
     <input class="input" v-model="username" placeholder="Username" required />
+    <span v-if="error.username">{{ error.username }}</span>
     <input class="input" v-model="password" type="password" placeholder="Password" required />
+    <span v-if="error.password">{{ error.password }}</span>
     <input
       class="input"
-      v-model="confirm_password"
+      v-model="password_confirmation"
+      ref="password_confirmation"
       type="password"
-      ref="confirm_password"
       placeholder="Confirmation Password"
-      required
       @input="validatePassword"
+      required
     />
+
     <button class="button">Create your account</button>
   </form>
 </template>
@@ -26,18 +29,18 @@ export default {
     return {
       username: "",
       password: "",
-      confirm_password: "",
-      error: "",
+      password_confirmation: "",
+      error: {},
     };
   },
   methods: {
     validatePassword() {
-      if (this.password != this.confirm_password) {
-        this.$refs.confirm_password.setCustomValidity(
+      if (this.password != this.password_confirmation) {
+        this.$refs.password_confirmation.setCustomValidity(
           "Confirmation password doesn't match!"
         );
       } else {
-        this.$refs.confirm_password.setCustomValidity("");
+        this.$refs.password_confirmation.setCustomValidity("");
       }
     },
     async register() {
@@ -46,10 +49,11 @@ export default {
         await Users.register({
           username: this.username,
           password: this.password,
+          password_confirmation: this.password_confirmation,
         });
         window.location.reload();
-      } catch(e) {
-        this.error = "Register failed!";
+      } catch (e) {
+        this.error = e.response.data;
       }
     },
   },
