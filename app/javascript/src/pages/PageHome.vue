@@ -7,6 +7,7 @@
     >
       <MoviesList :movies="movies" />
     </div>
+    <div class="loading" v-if="loading"></div>
   </div>
 </template>
 
@@ -22,15 +23,18 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      // loading: false,
     };
   },
   computed: {
-    ...mapState(["movies"]),
+    ...mapState(["movies", "meta", "loading"]),
   },
   methods: {
     ...mapActions(["search", "increaseMetaPage"]),
     loadMore() {
+      if (!this.meta || this.meta.page >= this.meta.pages) {
+        return;
+      }
       this.increaseMetaPage();
       this.search();
     },
