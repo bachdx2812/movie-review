@@ -92,8 +92,10 @@ export default {
       document.body.style.overflow = "hidden";
     },
     hidePreview() {
-      this.showVideo = false;
-      document.body.style.overflow = "auto";
+      setTimeout(() => {
+        this.showVideo = false;
+        document.body.style.overflow = "auto";
+      }, 100);
     },
   },
 };
