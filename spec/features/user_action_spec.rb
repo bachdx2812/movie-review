@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Rate action", :type => :feature do
+RSpec.feature "User action", :type => :feature do
   before :each do
     @user = User.create(username: "test", password: "1")
     @movie = FactoryBot.create(:movie)

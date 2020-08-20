@@ -71,7 +71,7 @@ export default {
         await this.like(movieId);
       } catch (e) {
         switch (e.response?.status) {
-          case 403:
+          case 401:
             this.$root.$refs.loginModal.show();
             break;
         }
@@ -83,7 +83,7 @@ export default {
         await this.dislike(movieId);
       } catch (e) {
         switch (e.response?.status) {
-          case 403:
+          case 401:
             this.$root.$refs.loginModal.show();
             break;
         }
