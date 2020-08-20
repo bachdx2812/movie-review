@@ -7,7 +7,9 @@
     >
       <MoviesList :movies="movies" />
     </div>
-    <div class="loading" v-if="loading"></div>
+    <transition name="fade1s">
+      <div class="loading" v-if="loading"></div>
+    </transition>
   </div>
 </template>
 

@@ -48,8 +48,7 @@ RSpec.feature "Share movie", :type => :feature do
     expect(page.find("img")["src"]).to have_content movie.thumbnail
 
     # Frontend check: mypage
-    find("small", text: "HI").click
-    find("a", text: "MY MOVIES").click
+    visit "/my_movies"
 
     expect(page).to have_content("My Movies")
     expect(page).to have_content(ENV["VIDEO_TITLE"])
