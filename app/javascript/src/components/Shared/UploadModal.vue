@@ -108,16 +108,12 @@ export default {
 
 .movie-thumbnail {
   width: 100%;
-  padding-top: 54vw;
+  padding-top: 54%;
   background: black;
 
   &::before {
     display: none !important;
   }
-}
-
-.modal-content {
-  height: 80vh;
 }
 
 .movie-detail {
@@ -148,7 +144,7 @@ export default {
 
     &.big {
       width: 100%;
-      padding-top: 54vw;
+      padding-top: 54%;
     }
 
     &.small {
@@ -166,6 +162,10 @@ export default {
 }
 
 @media (max-width: 599px) {
+  .modal-content {
+    height: 80vh;
+  }
+
   .form {
     padding: 10px;
   }
