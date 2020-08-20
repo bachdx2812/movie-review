@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 0) do
 
-  create_table "movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "youtube_video_id", null: false
     t.string "title", default: "", null: false
