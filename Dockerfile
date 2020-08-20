@@ -14,26 +14,22 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg -o /root/yarn-pubkey.gpg &
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" > /etc/apt/sources.list.d/yarn.list
 RUN apt-get update && apt-get install -y --no-install-recommends nodejs yarn default-mysql-client
 
-ENV INSTALL_PATH /app
-RUN mkdir -p $INSTALL_PATH
-WORKDIR $INSTALL_PATH
+WORKDIR /usr/src/app
 
 # ensure bundler is present
 RUN gem install bundler
 
 # install gems
-COPY Gemfile* $INSTALL_PATH/
-RUN bundle install --jobs 20 --retry 5 --without development test
+COPY Gemfile* ./
+RUN bundle config set without 'development test'
+RUN bundle install --jobs 20 --retry 5
 
 # install yarn packages
-COPY package.json yarn.lock $INSTALL_PATH/
+COPY package.json yarn.lock ./
 RUN yarn install --check-files
-RUN mv $INSTALL_PATH/node_modules /tmp/node_modules
 
 # copy all code over
-COPY . $INSTALL_PATH
-RUN rm -rf $INSTALL_PATH/node_modules
-RUN mv /tmp/node_modules $INSTALL_PATH/node_modules
+COPY . .
 
 # NOTE: Uncomment to run as non-root user (part #2)
 #RUN chown -R $USER_NAME:$USER_NAME $INSTALL_PATH
@@ -41,3 +37,12 @@ RUN mv /tmp/node_modules $INSTALL_PATH/node_modules
 
 #RUN rails webpacker:install
 RUN rails assets:precompile
+
+# Add a script to be executed every time the container starts.
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 3000
+
+# Start the main process.
+CMD ["rails", "server", "-b", "0.0.0.0", "-e", "production"]

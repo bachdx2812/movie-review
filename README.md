@@ -32,7 +32,7 @@ docker-compose build
 ```sh
 docker-compose up -d
 ```
-4. Open new terminal and run command to create db and apply migrations
+4. Finally, you need to create the database. In another terminal, run
 ```sh
 docker-compose run web bundle exec rake db:create
 docker-compose run web bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1
