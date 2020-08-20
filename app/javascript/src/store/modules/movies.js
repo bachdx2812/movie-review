@@ -47,7 +47,7 @@ export default {
       state.meta = payload;
     },
     INCREASE_META_PAGE(state) {
-      state.meta.page += 1;
+      if (state.meta) state.meta.page += 1;
     },
     LIKE_MOVIE(state, payload) {
       const likedMovie = state.movies.find((m) => m.id === payload);
