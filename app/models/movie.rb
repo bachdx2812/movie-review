@@ -23,6 +23,8 @@ class Movie < ApplicationRecord
   belongs_to :user
   has_many :rate_histories
 
+  validates :youtube_video_id, :title, presence: true
+
   def update_counter!
     summary = rate_histories.group(:rate_type).count(:id)
 

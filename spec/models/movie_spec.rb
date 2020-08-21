@@ -28,6 +28,11 @@ RSpec.describe Movie, type: :model do
       subject.youtube_video_id = nil
       is_expected.to_not be_valid
     end
+
+    it "is not valid without title" do
+      subject.title = nil
+      is_expected.to_not be_valid
+    end
   end
 
   describe "Methods" do

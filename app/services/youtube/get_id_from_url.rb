@@ -5,8 +5,10 @@ module Youtube
     end
 
     def execute
-      id = url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/)[1]
+      valid_url = url.match(/.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=)([^#\&\?]*).*/)
+      raise FetchIdFromYoutubeUrlError.new("Url must be a valid youtube, #{url}") unless valid_url
 
+      id = valid_url[1]
       raise FetchIdFromYoutubeUrlError.new("cant fetch Id from this url, #{url}") unless id
 
       id
