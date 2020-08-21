@@ -9,7 +9,8 @@ module Home
                :embed_url,
                :published_at,
                :username,
-               :rate
+               :rate,
+               :created_at
 
     def username
       object.user.username

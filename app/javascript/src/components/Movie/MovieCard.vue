@@ -18,7 +18,7 @@
             @click="dislikeMovie(movie.id)"
           >{{ movie.dislike_count }}</span>
         </div>
-        <div class="movie-date">{{ movie.published_at | dateFilter }}</div>
+        <div class="movie-date">{{ movie.created_at | dateFilter }}</div>
       </div>
       <div class="movie-author" v-if="!readonly">
         <div class="movie-author-avatar"></div>

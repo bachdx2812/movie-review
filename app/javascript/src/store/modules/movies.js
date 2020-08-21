@@ -3,6 +3,7 @@ const DISLIKE_MOVIE = "DISLIKE_MOVIE";
 const INCREASE_META_PAGE = "INCREASE_META_PAGE";
 const UPDATE_MOVIES = "UPDATE_MOVIES";
 const UPDATE_META = "UPDATE_META";
+const SORT_BY = "SORT_BY";
 
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
 const moviesRepo = new RepositoryFactory.get("movies");
@@ -14,11 +15,15 @@ export default {
     meta: {
       page: 0,
     },
+    orderby: "created_at",
   },
   actions: {
     async search({ commit, state }, payload) {
+      if (!state.meta) return;
+
       const result = await moviesRepo.search({
         page: state.meta.page,
+        orderby: state.orderby,
       });
 
       const moviesList = [...state.movies, ...result.data.movies];
@@ -38,6 +43,17 @@ export default {
 
       commit(DISLIKE_MOVIE, payload);
     },
+    async sortBy({ commit }, payload) {
+      const result = await moviesRepo.search({
+        page: 1,
+        orderby: payload,
+      });
+
+      const moviesList = [...result.data.movies];
+      commit(SORT_BY, payload);
+      commit(UPDATE_MOVIES, moviesList);
+      commit(UPDATE_META, result.data.meta);
+    }
   },
   mutations: {
     UPDATE_MOVIES(state, payload) {
@@ -67,5 +83,8 @@ export default {
       likedMovie.rate = "dislike";
       likedMovie.dislike_count += 1;
     },
+    SORT_BY(state, payload) {
+      state.orderby = payload;
+    }
   },
 };

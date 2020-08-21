@@ -3,7 +3,8 @@ module Api
     before_action :authenticate_user_json!, only: [:like, :dislike]
 
     def search
-      collection = Movie.all.includes(:user, :rate_histories).order(id: :desc)
+      orderby = params[:orderby] || "created_at"
+      collection = Movie.all.includes(:user, :rate_histories).order("#{orderby} desc")
 
       pagy, movies = pagy(
         collection,
