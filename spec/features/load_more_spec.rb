@@ -1,5 +1,6 @@
 require "rails_helper"
 
+## NOTICE : In some cases, result from API return too quick so expect `loading` appear/disappear can be fail
 RSpec.feature "Load more", :type => :feature do
   before :each do
     FactoryBot.create_list(:movie, 20)
