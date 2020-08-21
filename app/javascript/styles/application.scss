@@ -111,8 +111,8 @@ body {
         position: relative;
         transition: 0.3s ease-in-out;
 
-        &:hover,
-        &.active {
+        &:not(.readonly):hover,
+        &:not(.readonly).active {
           opacity: 1;
           filter: invert(71%) sepia(19%) saturate(1177%) hue-rotate(123deg) brightness(94%) contrast(82%);
         }
@@ -128,8 +128,8 @@ body {
           margin-right: 5px;
         }
 
-        &.like:hover::before,
-        &.like.active::before {
+        &.like:not(.readonly):hover::before,
+        &.like:not(.readonly).active::before {
           background-image: url("../images/like.svg");
         }
 
@@ -138,8 +138,8 @@ body {
           background-position: bottom center;
         }
 
-        &.dislike:hover::before,
-        &.dislike.active::before {
+        &.dislike:not(.readonly):hover::before,
+        &.dislike:not(.readonly).active::before {
           background-image: url("../images/dislike.svg");
         }
       }

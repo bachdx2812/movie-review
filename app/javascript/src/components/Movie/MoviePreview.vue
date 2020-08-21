@@ -16,9 +16,12 @@
         <div class="movie-title">{{ movie.title }}</div>
         <div class="movie-subtitle">
           <div class="movie-likes">
-            <span class="icon like" :class="{ active: movie.rate == 'like' }">{{ movie.like_count }}</span>
             <span
-              class="icon dislike"
+              class="icon like readonly"
+              :class="{ active: movie.rate == 'like' }"
+            >{{ movie.like_count }}</span>
+            <span
+              class="icon dislike readonly"
               :class="{ active: movie.rate == 'dislike' }"
             >{{ movie.dislike_count }}</span>
           </div>
