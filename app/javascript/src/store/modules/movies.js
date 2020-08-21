@@ -54,6 +54,7 @@ export default {
       commit(DISLIKE_MOVIE, payload);
     },
     async sortBy({ commit }, payload) {
+      commit(TOGGLE_LOADING, true);
       const result = await moviesRepo.search({
         page: 1,
         orderby: payload,
@@ -63,6 +64,7 @@ export default {
       commit(SORT_BY, payload);
       commit(UPDATE_MOVIES, moviesList);
       commit(UPDATE_META, result.data.meta);
+      commit(TOGGLE_LOADING, false);
     }
   },
   mutations: {
