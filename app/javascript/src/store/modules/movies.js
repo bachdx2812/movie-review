@@ -3,6 +3,8 @@ const DISLIKE_MOVIE = "DISLIKE_MOVIE";
 const INCREASE_META_PAGE = "INCREASE_META_PAGE";
 const UPDATE_MOVIES = "UPDATE_MOVIES";
 const UPDATE_META = "UPDATE_META";
+const SORT_BY = "SORT_BY";
+const TOGGLE_LOADING = "TOGGLE_LOADING";
 
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
 const moviesRepo = new RepositoryFactory.get("movies");
@@ -10,20 +12,33 @@ const moviesRepo = new RepositoryFactory.get("movies");
 export default {
   namespaced: true,
   state: {
+    loading: false,
     movies: [],
     meta: {
       page: 0,
     },
+    orderby: "created_at",
   },
   actions: {
     async search({ commit, state }, payload) {
-      const result = await moviesRepo.search({
-        page: state.meta.page,
-      });
+      try {
+        commit(TOGGLE_LOADING, true);
 
-      const moviesList = [...state.movies, ...result.data.movies];
-      commit(UPDATE_MOVIES, moviesList);
-      commit(UPDATE_META, result.data.meta);
+        if (!state.meta) return;
+
+        const result = await moviesRepo.search({
+          page: state.meta.page,
+          orderby: state.orderby,
+        });
+
+        const moviesList = [...state.movies, ...result.data.movies];
+        commit(UPDATE_MOVIES, moviesList);
+        commit(UPDATE_META, result.data.meta);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        commit(TOGGLE_LOADING, false);
+      }
     },
     increaseMetaPage({ commit }) {
       commit(INCREASE_META_PAGE);
@@ -38,8 +53,22 @@ export default {
 
       commit(DISLIKE_MOVIE, payload);
     },
+    async sortBy({ commit }, payload) {
+      const result = await moviesRepo.search({
+        page: 1,
+        orderby: payload,
+      });
+
+      const moviesList = [...result.data.movies];
+      commit(SORT_BY, payload);
+      commit(UPDATE_MOVIES, moviesList);
+      commit(UPDATE_META, result.data.meta);
+    }
   },
   mutations: {
+    TOGGLE_LOADING(state, payload) {
+      state.loading = payload;
+    },
     UPDATE_MOVIES(state, payload) {
       state.movies = payload;
     },
@@ -47,7 +76,7 @@ export default {
       state.meta = payload;
     },
     INCREASE_META_PAGE(state) {
-      state.meta.page += 1;
+      if (state.meta) state.meta.page += 1;
     },
     LIKE_MOVIE(state, payload) {
       const likedMovie = state.movies.find((m) => m.id === payload);
@@ -67,5 +96,8 @@ export default {
       likedMovie.rate = "dislike";
       likedMovie.dislike_count += 1;
     },
+    SORT_BY(state, payload) {
+      state.orderby = payload;
+    }
   },
 };

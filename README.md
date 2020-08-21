@@ -37,4 +37,21 @@ docker-compose up -d
 docker-compose run web bundle exec rake db:create
 docker-compose run web bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1
 docker-compose run web bundle exec rake db:seed
+
+# Rspec
+1. You need an `.env.test.local` file, duplicate `.env.test.local.example` and edit to fit your test environment
+2. Create test database
+
+```
+bundle exec rake db:create RAILS_ENV=test
+```
+
+3. Apply migrations for test database
+
+```
+bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1 RAILS_ENV=test
+```
+4. Rspec command
+```
+bundle exec rspec -fd
 ```

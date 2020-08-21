@@ -1,56 +1,62 @@
 <template>
-  <form class="form" @submit.prevent="executeRegister">
+  <form class="form" @submit.prevent="register">
     <h2>Register</h2>
-    <div class="error-message" v-if="error">{{ error }}</div>
+    <span class="error-message" v-if="error.username">{{ error.username[0] }}</span>
     <input class="input" v-model="username" placeholder="Username" required />
+    <span class="error-message" v-if="error.password">{{ error.password[0] }}</span>
     <input class="input" v-model="password" type="password" placeholder="Password" required />
+    <span
+      class="error-message"
+      v-if="error.password_confirmation"
+    >{{ error.password_confirmation[0] }}</span>
     <input
       class="input"
-      v-model="confirm_password"
+      v-model="password_confirmation"
+      ref="password_confirmation"
       type="password"
-      ref="confirm_password"
       placeholder="Confirmation Password"
-      required
       @input="validatePassword"
+      required
     />
+
     <button class="button">Create your account</button>
   </form>
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("users");
+import { RepositoryFactory } from "@/repositories/RepositoryFactory";
+const Users = new RepositoryFactory.get("users");
 
 export default {
   data() {
     return {
       username: "",
       password: "",
-      confirm_password: "",
-      error: "",
+      password_confirmation: "",
+      error: {},
     };
   },
   methods: {
-    ...mapActions(["register"]),
     validatePassword() {
-      if (this.password != this.confirm_password) {
-        this.$refs.confirm_password.setCustomValidity(
+      if (this.password != this.password_confirmation) {
+        this.$refs.password_confirmation.setCustomValidity(
           "Confirmation password doesn't match!"
         );
       } else {
-        this.$refs.confirm_password.setCustomValidity("");
+        this.$refs.password_confirmation.setCustomValidity("");
       }
     },
-    async executeRegister() {
+    async register() {
       try {
         this.error = "";
-        await this.register({
+        await Users.register({
           username: this.username,
           password: this.password,
+          password_confirmation: this.password_confirmation,
         });
-        this.$root.$refs.loginModal.hide();
-      } catch(e) {
-        this.error = "Register failed!";
+        window.location.reload();
+      } catch (e) {
+        this.error = e.response.data;
       }
     },
   },

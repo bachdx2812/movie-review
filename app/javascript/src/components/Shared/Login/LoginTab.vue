@@ -1,16 +1,16 @@
 <template>
-  <form class="form" @submit.prevent="executeLogin">
+  <form class="form" @submit.prevent="login">
     <h2>Sign in to continue</h2>
     <div class="error-message" v-if="error">{{ error }}</div>
-    <input class="input" v-model="username" placeholder="Username" required />
-    <input class="input" v-model="password" type="password" placeholder="Password" />
+    <input name="username" class="input" v-model="username" placeholder="Username" required />
+    <input name="password" class="input" v-model="password" type="password" placeholder="Password" />
     <button class="button">Login</button>
   </form>
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapActions } = createNamespacedHelpers("users");
+import { RepositoryFactory } from "@/repositories/RepositoryFactory";
+const Users = new RepositoryFactory.get("users");
 
 export default {
   data() {
@@ -21,12 +21,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["login"]),
-    async executeLogin() {
+    async login() {
       try {
         this.error = "";
-        await this.login({ username: this.username, password: this.password });
-        this.$root.$refs.loginModal.hide();
+        await Users.login({ username: this.username, password: this.password });
+        window.location.reload();
       } catch {
         this.error = "Login failed!";
       }

@@ -34,8 +34,10 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
-.env
 coverage
+.env
+.env.test.local
 
 /config/credentials/production.key
 /db-data
+**/.DS_Store

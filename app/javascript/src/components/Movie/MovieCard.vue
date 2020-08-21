@@ -1,24 +1,26 @@
 <template>
   <li class="movie-item">
-    <div class="movie-thumbnail" @click="showVideo = true">
-      <img :src="movie.thumbnail" />
+    <div class="movie-thumbnail" @click="showPreview">
+      <img v-lazy="movie.thumbnail" />
     </div>
     <div class="movie-detail">
       <div class="movie-title">{{ movie.title }}</div>
       <div class="movie-subtitle">
         <div class="movie-likes">
           <span
+            :id="`like_${movie.id}`"
             class="icon like"
-            :class="{ active: movie.rate == 'like' }"
+            :class="{ active: movie.rate == 'like', readonly: readonly }"
             @click="likeMovie(movie.id)"
           >{{ movie.like_count }}</span>
           <span
+           :id="`dislike_${movie.id}`"
             class="icon dislike"
-            :class="{ active: movie.rate == 'dislike' }"
+            :class="{ active: movie.rate == 'dislike', readonly: readonly }"
             @click="dislikeMovie(movie.id)"
           >{{ movie.dislike_count }}</span>
         </div>
-        <div class="movie-date">{{ movie.published_at | dateFilter }}</div>
+        <div class="movie-date">{{ movie.created_at | dateFilter }}</div>
       </div>
       <div class="movie-author" v-if="!readonly">
         <div class="movie-author-avatar"></div>
@@ -29,7 +31,7 @@
       </div>
       <div class="movie-description">{{ movie.description }}</div>
     </div>
-    <MoviePreview :url="movie.embed_url" v-if="showVideo" @close="showVideo = false" />
+    <MoviePreview :movie="movie" v-if="showVideo" @close="hidePreview" />
   </li>
 </template>
 
@@ -69,7 +71,7 @@ export default {
         await this.like(movieId);
       } catch (e) {
         switch (e.response?.status) {
-          case 403:
+          case 401:
             this.$root.$refs.loginModal.show();
             break;
         }
@@ -81,11 +83,21 @@ export default {
         await this.dislike(movieId);
       } catch (e) {
         switch (e.response?.status) {
-          case 403:
+          case 401:
             this.$root.$refs.loginModal.show();
             break;
         }
       }
+    },
+    showPreview() {
+      this.showVideo = true;
+      document.body.style.overflow = "hidden";
+    },
+    hidePreview() {
+      setTimeout(() => {
+        this.showVideo = false;
+        document.body.style.overflow = "auto";
+      }, 100);
     },
   },
 };
