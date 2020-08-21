@@ -81,3 +81,4 @@ gem "ransack" # ActiveRecord searching
 gem "rest-client" # http request
 gem "ridgepole" # DB management
 gem "sidekiq" # background job
+gem "faker" # remove this line if don't want to use faker to seed the database in production
