@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Share movie", :type => :feature do
   before :each do
-    @user = User.create(username: "test", password: "1")
+    @user = User.create(username: "vutaka", password: "123456")
   end
 
   scenario "Valid URL" do
@@ -45,13 +45,13 @@ RSpec.feature "Share movie", :type => :feature do
     # Frontend check: home
     expect(page).to have_content(ENV["VIDEO_TITLE"])
     expect(page).to have_content("BY #{@user.username.upcase}")
-    expect(page.find("img")["src"]).to have_content movie.thumbnail
+    expect(page.find(".movie-thumbnail img")["data-src"]).to have_content movie.thumbnail
 
     # Frontend check: mypage
     visit "/my_movies"
 
     expect(page).to have_content("My Movies")
     expect(page).to have_content(ENV["VIDEO_TITLE"])
-    expect(page.find("img")["src"]).to have_content movie.thumbnail
+    expect(page.find(".movie-thumbnail img")["data-src"]).to have_content movie.thumbnail
   end
 end

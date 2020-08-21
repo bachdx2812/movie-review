@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Load more", :type => :feature do
   before :each do
-    @user = User.create(username: "test", password: "1")
+    @user = User.create(username: "vutaka", password: "123456")
     FactoryBot.create_list(:movie, 20)
   end
 

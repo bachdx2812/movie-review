@@ -23,6 +23,7 @@ RSpec.describe Movie, type: :model do
       expect(subject.like_count).to eq(0)
       expect(subject.dislike_count).to eq(0)
     end
+
     it "is not valid without youtube_video_id" do
       subject.youtube_video_id = nil
       is_expected.to_not be_valid

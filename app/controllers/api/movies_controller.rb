@@ -1,6 +1,6 @@
 module Api
   class MoviesController < BaseController
-    before_action :authenticate_user_json!, only: [:like, :dislike]
+    before_action :authenticate_user_json!, only: [:like, :dislike, :create, :youtube, :my]
 
     def search
       orderby = params[:orderby] || "created_at"
