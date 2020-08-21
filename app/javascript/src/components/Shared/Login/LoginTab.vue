@@ -2,8 +2,8 @@
   <form class="form" @submit.prevent="login">
     <h2>Sign in to continue</h2>
     <div class="error-message" v-if="error">{{ error }}</div>
-    <input class="input" v-model="username" placeholder="Username" required />
-    <input class="input" v-model="password" type="password" placeholder="Password" />
+    <input name="username" class="input" v-model="username" placeholder="Username" required />
+    <input name="password" class="input" v-model="password" type="password" placeholder="Password" />
     <button class="button">Login</button>
   </form>
 </template>

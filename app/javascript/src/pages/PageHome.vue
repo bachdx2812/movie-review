@@ -23,6 +23,9 @@
     >
       <MoviesList :movies="movies" />
     </div>
+    <transition name="fade1s">
+      <div class="loading" v-if="loading"></div>
+    </transition>
   </div>
 </template>
 
@@ -38,16 +41,18 @@ export default {
   },
   data() {
     return {
-      loading: false,
       orderby: "created_at",
     };
   },
   computed: {
-    ...mapState(["movies"]),
+    ...mapState(["movies", "meta", "loading"]),
   },
   methods: {
     ...mapActions(["search", "increaseMetaPage", "sortBy"]),
     loadMore() {
+      if (!this.meta || this.meta.page >= this.meta.pages) {
+        return;
+      }
       this.increaseMetaPage();
       this.search();
     },

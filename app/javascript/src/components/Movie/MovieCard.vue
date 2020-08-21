@@ -8,11 +8,13 @@
       <div class="movie-subtitle">
         <div class="movie-likes">
           <span
+            :id="`like_${movie.id}`"
             class="icon like"
             :class="{ active: movie.rate == 'like', readonly: readonly }"
             @click="likeMovie(movie.id)"
           >{{ movie.like_count }}</span>
           <span
+           :id="`dislike_${movie.id}`"
             class="icon dislike"
             :class="{ active: movie.rate == 'dislike', readonly: readonly }"
             @click="dislikeMovie(movie.id)"
@@ -69,7 +71,7 @@ export default {
         await this.like(movieId);
       } catch (e) {
         switch (e.response?.status) {
-          case 403:
+          case 401:
             this.$root.$refs.loginModal.show();
             break;
         }
@@ -81,7 +83,7 @@ export default {
         await this.dislike(movieId);
       } catch (e) {
         switch (e.response?.status) {
-          case 403:
+          case 401:
             this.$root.$refs.loginModal.show();
             break;
         }

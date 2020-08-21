@@ -7,8 +7,8 @@
           <h2>Enter Youtube URL</h2>
 
           <div class="flex">
-            <input class="input" v-model="url" required />
-            <button class="button" :disabled="!url">Preview</button>
+            <input name="url" class="input" v-model="url" required />
+            <button id="preview-button" class="button" :disabled="!url">Preview</button>
           </div>
         </form>
       </div>
@@ -37,7 +37,7 @@
 
       <div class="modal-footer" v-if="sharable">
         <form class="form" @submit.prevent="uploadVideo">
-          <button class="button">Share</button>
+          <button id="share-button" class="button">Share</button>
         </form>
       </div>
     </div>

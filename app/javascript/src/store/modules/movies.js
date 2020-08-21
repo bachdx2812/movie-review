@@ -4,6 +4,7 @@ const INCREASE_META_PAGE = "INCREASE_META_PAGE";
 const UPDATE_MOVIES = "UPDATE_MOVIES";
 const UPDATE_META = "UPDATE_META";
 const SORT_BY = "SORT_BY";
+const TOGGLE_LOADING = "TOGGLE_LOADING";
 
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
 const moviesRepo = new RepositoryFactory.get("movies");
@@ -11,6 +12,7 @@ const moviesRepo = new RepositoryFactory.get("movies");
 export default {
   namespaced: true,
   state: {
+    loading: false,
     movies: [],
     meta: {
       page: 0,
@@ -19,16 +21,24 @@ export default {
   },
   actions: {
     async search({ commit, state }, payload) {
-      if (!state.meta) return;
+      try {
+        commit(TOGGLE_LOADING, true);
 
-      const result = await moviesRepo.search({
-        page: state.meta.page,
-        orderby: state.orderby,
-      });
+        if (!state.meta) return;
 
-      const moviesList = [...state.movies, ...result.data.movies];
-      commit(UPDATE_MOVIES, moviesList);
-      commit(UPDATE_META, result.data.meta);
+        const result = await moviesRepo.search({
+          page: state.meta.page,
+          orderby: state.orderby,
+        });
+
+        const moviesList = [...state.movies, ...result.data.movies];
+        commit(UPDATE_MOVIES, moviesList);
+        commit(UPDATE_META, result.data.meta);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        commit(TOGGLE_LOADING, false);
+      }
     },
     increaseMetaPage({ commit }) {
       commit(INCREASE_META_PAGE);
@@ -56,6 +66,9 @@ export default {
     }
   },
   mutations: {
+    TOGGLE_LOADING(state, payload) {
+      state.loading = payload;
+    },
     UPDATE_MOVIES(state, payload) {
       state.movies = payload;
     },
