@@ -35,5 +35,5 @@ bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1 RAILS_ENV=
 ```
 4. Rspec command
 ```
-rspec -fd 
+bundle exec rspec -fd 
 ```
