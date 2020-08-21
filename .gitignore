@@ -37,5 +37,7 @@ yarn-debug.log*
 coverage
 .env
 .env.test.local
-coverage
+
+/config/credentials/production.key
+/db-data
 **/.DS_Store
