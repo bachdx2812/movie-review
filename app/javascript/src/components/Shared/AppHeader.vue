@@ -5,7 +5,7 @@
     </div>
     <div class="box-right">
       <ul class="menu" v-if="signedIn">
-        <li>
+        <li :class="{ active: menuActive }" @click="menuActive = !menuActive">
           <span>
             <small>Hi</small>
             {{ username }}
@@ -35,6 +35,11 @@ export default {
   props: {
     signedIn: Boolean,
     username: String,
+  },
+  data() {
+    return {
+      menuActive: false,
+    };
   },
   methods: {
     showModal() {
