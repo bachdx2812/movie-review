@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Share movie", :type => :feature do
   before :each do
-    @user = User.create(username: "vutaka", password: "123456")
+    @user = FactoryBot.create(:user)
   end
 
   scenario "Valid URL" do

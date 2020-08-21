@@ -2,12 +2,10 @@ require "rails_helper"
 
 RSpec.feature "Load more", :type => :feature do
   before :each do
-    @user = User.create(username: "vutaka", password: "123456")
     FactoryBot.create_list(:movie, 20)
   end
 
   scenario "Normal scroll" do
-    # Click share button & type url on input
     visit "/"
     # The first time load => return DEFAULT_PER_PAGE item => display DEFAULT_PER_PAGE item
     expect(page).to have_css(".movie-item", count: ENV["DEFAULT_PER_PAGE"].to_i)
@@ -28,7 +26,6 @@ RSpec.feature "Load more", :type => :feature do
   end
 
   scenario "Continuity scroll" do
-    # Click share button & type url on input
     visit "/"
     # The first time load => return DEFAULT_PER_PAGE item => display DEFAULT_PER_PAGE item
     expect(page).to have_css(".movie-item", count: ENV["DEFAULT_PER_PAGE"].to_i)
@@ -46,7 +43,7 @@ RSpec.feature "Load more", :type => :feature do
     # display 2*DEFAULT_PER_PAGE item
     expect(page).to have_css(".movie-item", count: ENV["DEFAULT_PER_PAGE"].to_i * 2)
 
-    # Still do not load more item
+    # Still do not load more item check
     page.execute_script "window.scrollBy(0,10000)"
     page.execute_script "window.scrollBy(0,10000)"
     page.execute_script "window.scrollBy(0,10000)"
