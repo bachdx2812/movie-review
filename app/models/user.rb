@@ -19,6 +19,8 @@ class User < ApplicationRecord
 
   has_many :movies
 
+  validates :username, presence: true
+
   def email_required?
     false
   end

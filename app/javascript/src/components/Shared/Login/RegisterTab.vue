@@ -1,11 +1,14 @@
 <template>
   <form class="form" @submit.prevent="register">
     <h2>Register</h2>
-    <div class="error-message" v-if="error">{{ error }}</div>
+    <span class="error-message" v-if="error.username">{{ error.username[0] }}</span>
     <input class="input" v-model="username" placeholder="Username" required />
-    <span v-if="error.username">{{ error.username }}</span>
+    <span class="error-message" v-if="error.password">{{ error.password[0] }}</span>
     <input class="input" v-model="password" type="password" placeholder="Password" required />
-    <span v-if="error.password">{{ error.password }}</span>
+    <span
+      class="error-message"
+      v-if="error.password_confirmation"
+    >{{ error.password_confirmation[0] }}</span>
     <input
       class="input"
       v-model="password_confirmation"
