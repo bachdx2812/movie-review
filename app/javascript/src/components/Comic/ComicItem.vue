@@ -56,7 +56,7 @@ export default {
 
 <style lang="scss" scoped>
 .comic-item {
-  width: 50%;
+  width: 187.5px;
   overflow: hidden;
   padding: 7px;
   font-size: 12px;
@@ -69,7 +69,7 @@ export default {
     .thumbnail {
       position: relative;
       width: 100%;
-      padding-top: 125%;
+      padding-top: 150%;
       overflow: hidden;
 
       > img {

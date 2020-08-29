@@ -174,7 +174,7 @@ export default {
         }
         window.location.reload();
       } catch (e) {
-        console.log(e);
+        alert(e.message);
       }
     },
   },
