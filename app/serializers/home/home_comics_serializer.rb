@@ -11,7 +11,8 @@ module Home
                :volumes_total,
                :ongoing,
                :finished,
-               :thumbnail
+               :thumbnail,
+               :publisher_id
 
     belongs_to :publisher
   end
