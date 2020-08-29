@@ -2,7 +2,7 @@
   <li class="comic-item" @click="open">
     <div class="inner">
       <div class="thumbnail">
-        <img :src="comic.thumbnail" />
+        <img :src="comic.thumbnail" v-centered-image />
         <div class="status" :class="status">
           {{comic.volumes_collected}}/{{comic.volumes_total}}
           <template v-if="comic.ongoing">+</template>
@@ -78,6 +78,11 @@ export default {
         left: 50%;
         transform: translate(-50%, -50%);
         width: 100%;
+
+        &.landscape {
+          width: auto;
+          height: 100%;
+        }
       }
 
       .status {

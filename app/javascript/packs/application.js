@@ -21,6 +21,21 @@ Vue.use(VueLazyload, {
 })
 Vue.use(VueLazyload);
 
+Vue.directive("centered-image", {
+  bind: function (el, binding) {
+    el.onload = function (event) {
+      if (event.path?.length) {
+        const img = event.path[0];
+        if (img.height / img.width <= 1.5) {
+          el.classList.add(binding.value || "landscape");
+        } else {
+          el.classList.remove(binding.value || "landscape");
+        }
+      }
+    }
+  }
+})
+
 import store from "@/store";
 
 document.addEventListener("DOMContentLoaded", () => {

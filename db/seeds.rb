@@ -39,6 +39,7 @@ Publisher.create!(name: "NXB Trẻ", logo: "https://www.fahasa.com/media/wysiwyg
 Publisher.create!(name: "TVM Comics", logo: "https://lethuyxuanduong.files.wordpress.com/2015/11/logo193_400x400.png")
 Publisher.create!(name: "TABooks", logo: "https://scontent-hkg4-1.xx.fbcdn.net/v/t1.0-9/56726597_2065455236886657_2486595436555534336_n.jpg?_nc_cat=107&_nc_sid=09cbfe&_nc_ohc=P5XMFtYWvR8AX_8Wx9A&_nc_ht=scontent-hkg4-1.xx&oh=ab43e53fa86251790417483f11441218&oe=5F6FBB9A")
 Publisher.create!(name: "NXB Hồng Đức", logo: "https://nhasachhongduc.com.vn/img/logo.png")
+Publisher.create!(name: "NXB Thanh Niên", logo: "https://www.ecoblader.com/wp-content/uploads/2016/08/thanh-nien.png")
 
 # movies = Movie.all
 # users = User.all
