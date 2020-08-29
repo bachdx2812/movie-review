@@ -12,7 +12,23 @@
 
 ActiveRecord::Schema.define(version: 0) do
 
-  create_table "movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "comics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "copyright_title", null: false
+    t.string "author", null: false
+    t.integer "publisher_id"
+    t.integer "year_start"
+    t.integer "year_end"
+    t.integer "volumes_collected"
+    t.integer "volumes_total"
+    t.boolean "ongoing"
+    t.boolean "finished"
+    t.string "thumbnail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "youtube_video_id", null: false
     t.string "title", default: "", null: false
@@ -24,6 +40,13 @@ ActiveRecord::Schema.define(version: 0) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_movies_on_userid"
+  end
+
+  create_table "publishers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "logo", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "rate_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

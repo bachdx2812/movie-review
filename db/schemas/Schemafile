@@ -1,3 +1,5 @@
 require "users.schema"
 require "rate_histories.schema"
 require "movies.schema"
+require "comics.schema"
+require "publishers.schema"

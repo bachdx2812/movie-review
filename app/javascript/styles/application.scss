@@ -217,14 +217,14 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  background: rgba($color: #000000, $alpha: 0.75);
 
   .modal-content {
     background: white;
-    width: 600px;
     position: relative;
     z-index: 1;
     animation: modalAppear 0.2s ease-in backwards;
-    max-height: 80vh;
+    max-height: 60vh;
     overflow: hidden;
     display: flex;
     flex-flow: column;

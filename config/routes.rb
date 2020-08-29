@@ -62,6 +62,9 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :comics
+    resources :publishers
+
     resources :users, only: [] do
       collection do
         post :register

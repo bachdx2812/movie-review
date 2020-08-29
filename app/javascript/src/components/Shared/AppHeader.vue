@@ -20,7 +20,7 @@
           </ul>
         </li>
         <li class="upload">
-          <a @click.prevent="showUploadModal()">Share Movie</a>
+          <a @click.prevent="showUploadModal()">New Comic</a>
         </li>
       </ul>
       <ul class="menu" v-else>

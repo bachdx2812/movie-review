@@ -1,97 +1,177 @@
 <template>
-  <div class="modal" v-if="visible">
-    <div class="modal-content">
-      <div class="modal-close" @click="hide">x</div>
-      <div class="modal-header">
-        <form class="form" @submit.prevent="getVideoInfo">
-          <h2>Enter Youtube URL</h2>
-
-          <div class="flex">
-            <input name="url" class="input" v-model="url" required />
-            <button id="preview-button" class="button" :disabled="!url">Preview</button>
+  <div class="modal fade show" v-if="visible" ref="modal">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <form class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add Comic</h5>
+          <button type="button" class="close" @click="hide">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Image</label>
+            <img
+              :src="data.thumbnail"
+              width="120"
+              height="180"
+              class="d-block mb-3"
+              style="object-fit: contain"
+            />
+            <input class="form-control" required v-model="data.thumbnail" />
           </div>
-        </form>
-      </div>
-
-      <div class="modal-body">
-        <div class="form">
-          <div class="movie-item column" v-if="data">
-            <div class="movie-thumbnail">
-              <img :src="data.thumbnail" />
+          <div class="form-group">
+            <label>Title</label>
+            <input class="form-control" required v-model="data.title" />
+          </div>
+          <div class="form-group">
+            <label>Copyright Title</label>
+            <input class="form-control" required v-model="data.copyright_title" />
+          </div>
+          <div class="form-group">
+            <label>Author</label>
+            <input class="form-control" required v-model="data.author" />
+          </div>
+          <div class="form-group">
+            <label>Publisher</label>
+            <select class="form-control" required v-model="data.publisher_id">
+              <option v-for="item in publishers" :key="item.id" :value="item.id">{{item.name}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Year</label>
+            <div class="input-group">
+              <input
+                type="number"
+                inputmode="numeric"
+                class="form-control"
+                required
+                v-model="data.year_start"
+              />
+              <input type="number" inputmode="numeric" class="form-control" v-model="data.year_end" />
             </div>
-            <div class="movie-detail">
-              <div class="movie-title">{{ data.title }}</div>
-              <div class="movie-subtitle">
-                <div class="movie-date">{{ data.published_at | dateFilter }}</div>
+          </div>
+          <div class="form-group">
+            <label>Volumes</label>
+            <div class="input-group">
+              <input
+                type="number"
+                inputmode="numeric"
+                class="form-control"
+                required
+                v-model="data.volumes_collected"
+              />
+              <input
+                type="number"
+                inputmode="numeric"
+                class="form-control"
+                required
+                v-model="data.volumes_total"
+              />
+              <div class="input-group-append">
+                <span class="input-group-text">
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="ongoing"
+                      v-model="data.ongoing"
+                    />
+                    <label class="custom-control-label" for="ongoing">Ongoing</label>
+                  </div>
+                </span>
+                <span class="input-group-text">
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="finished"
+                      v-model="data.finished"
+                    />
+                    <label class="custom-control-label" for="finished">Finished</label>
+                  </div>
+                </span>
               </div>
-              <div class="movie-description">{{ data.description }}</div>
             </div>
-          </div>
-          <div class="placeholder" v-else>
-            <div class="big"></div>
-            <div class="small"></div>
-            <div class="small"></div>
           </div>
         </div>
-      </div>
-
-      <div class="modal-footer" v-if="sharable">
-        <form class="form" @submit.prevent="uploadVideo">
-          <button id="share-button" class="button">Share</button>
-        </form>
-      </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" @click.prevent="save">Save</button>
+          <button type="button" class="btn btn-secondary" @click="hide">Close</button>
+        </div>
+      </form>
     </div>
-    <div class="modal-shadow" @click="hide"></div>
   </div>
 </template>
 
 <script>
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
-const Movies = new RepositoryFactory.get("movies");
+const Comics = new RepositoryFactory.get("comics");
+const Publishers = new RepositoryFactory.get("publishers");
 
 export default {
   data() {
     return {
       visible: false,
-      url: "",
-      data: null,
-      sharable: false,
+      data: {
+        title: "",
+        copyright_title: "",
+        thumbnail: "",
+        author: "",
+        publisher_id: 1,
+        year_start: "",
+        year_end: "",
+        volumns_collected: 0,
+        volumns_total: 0,
+        ongoing: false,
+        finished: false,
+      },
+      publishers: [],
+      editId: null,
     };
   },
-  filters: {
-    dateFilter: function (value) {
-      return new Date(value).toLocaleDateString("en-UK", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-    },
+  async created() {
+    const response = await Publishers.search();
+    this.publishers = response.data;
   },
   methods: {
-    show() {
+    show(comic) {
+      if (comic) {
+        this.data = comic;
+        this.editId = comic.id;
+      }
+
       this.visible = true;
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
     },
     hide() {
-      this.visible = false;
-      this.url = "";
-      this.data = null;
-      this.sharable = false;
-      document.body.style.overflow = "auto";
+      this.$refs.modal.classList.remove("show");
+      setTimeout(() => {
+        this.visible = false;
+        this.data = {
+          title: "",
+          copyright_title: "",
+          thumbnail: "",
+          author: "",
+          publisher_id: 1,
+          year_start: "",
+          year_end: "",
+          volumns_collected: 0,
+          volumns_total: 0,
+          ongoing: false,
+          finished: false,
+        };
+        this.editId = null;
+        document.body.classList.remove("modal-open");
+      }, 300);
     },
-    async getVideoInfo() {
+    async save() {
       try {
-        const response = await Movies.getYoutubeInfo(this.url);
-        this.data = response.data;
-        this.sharable = true;
-      } catch (e) {
-        this.data = null;
-        this.sharable = false;
-      }
-    },
-    async uploadVideo() {
-      try {
-        await Movies.upload(this.data);
+        if (this.editId) {
+          await Comics.update(this.editId, this.data);
+        } else {
+          await Comics.create(this.data);
+        }
         window.location.reload();
       } catch (e) {
         console.log(e);
@@ -100,86 +180,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.movie-item {
-  margin: 0;
-}
-
-.movie-thumbnail {
-  width: 100%;
-  padding-top: 54%;
-  background: black;
-
-  &::before {
-    display: none !important;
-  }
-}
-
-.movie-detail {
-  padding: 15px 0;
-  width: 100%;
-  height: auto;
-
-  .movie-description {
-    display: block;
-  }
-}
-
-.modal-body {
-  .form {
-    padding-top: 0;
-  }
-}
-
-.input {
-  margin: 0;
-}
-
-.placeholder {
-  div {
-    margin-bottom: 10px;
-    border-radius: 15px;
-    background: #efefef;
-
-    &.big {
-      width: 100%;
-      padding-top: 54%;
-    }
-
-    &.small {
-      width: 50%;
-      height: 16px;
-    }
-  }
-}
-
-@media (max-width: 799px) {
-  .movie-item {
-    padding: 0;
-    max-width: none;
-  }
-}
-
-@media (max-width: 599px) {
-  .modal-content {
-    height: 80vh;
-  }
-
-  .form {
-    padding: 10px;
-  }
-
-  .input {
-    font-size: 14px;
-    height: 40px;
-    padding: 0 10px;
-  }
-
-  .button {
-    padding: 10px;
-    height: 40px;
-    font-size: 14px;
-  }
-}
-</style>

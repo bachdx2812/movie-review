@@ -3,6 +3,7 @@ require("@rails/activestorage").start();
 require("channels");
 
 import Vue from "vue/dist/vue.esm";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/application.scss";
 
 require.context("../images", true);

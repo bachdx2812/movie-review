@@ -1,27 +1,11 @@
 <template>
   <div class="app-body">
-    <div class="container">
-      <div class="sorts">
-        <label class="radio">
-          <input type="radio" v-model="orderby" value="created_at" @change="sort" />
-          <span>Newest</span>
-        </label>
-        <label class="radio">
-          <input type="radio" v-model="orderby" value="like_count" @change="sort" />
-          <span>Most liked</span>
-        </label>
-        <label class="radio">
-          <input type="radio" v-model="orderby" value="dislike_count" @change="sort" />
-          <span>Most disliked</span>
-        </label>
-      </div>
-    </div>
     <div
       v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="10"
     >
-      <MoviesList :movies="movies" />
+      <ComicList :comics="comics" />
     </div>
     <transition name="fade1s">
       <div class="loading" v-if="loading"></div>
@@ -30,34 +14,42 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("movies");
+import { RepositoryFactory } from "@/repositories/RepositoryFactory";
+const Comics = new RepositoryFactory.get("comics");
 
-import MoviesList from "@/components/Movie/MoviesList";
+import ComicList from "@/components/Comic/ComicList";
 
 export default {
   components: {
-    MoviesList,
+    ComicList,
   },
   data() {
     return {
-      orderby: "created_at",
+      loading: false,
+      comics: [],
+      page: 0,
+      stop: false,
     };
   },
-  computed: {
-    ...mapState(["movies", "meta", "loading"]),
-  },
   methods: {
-    ...mapActions(["search", "increaseMetaPage", "sortBy"]),
-    loadMore() {
-      if (!this.meta || this.meta.page >= this.meta.pages) {
-        return;
+    async search() {
+      try {
+        this.loading = true;
+        const response = await Comics.search({ page: this.page });
+        this.comics = [...this.comics, ...response.data.comics];
+        if (response.data.comics.length < 10) {
+          this.stop = true;
+        }
+      } catch {
+        this.stop = true;
+      } finally {
+        this.loading = false;
       }
-      this.increaseMetaPage();
-      this.search();
     },
-    sort() {
-      this.sortBy(this.orderby);
+    loadMore() {
+      if (this.stop) return;
+      this.page++;
+      this.search();
     },
   },
 };
