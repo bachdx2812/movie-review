@@ -1,6 +1,6 @@
 <template>
-  <li class="comic-item" @click="open">
-    <div class="inner">
+  <li class="comic-item">
+    <div class="inner" @click="open">
       <div class="thumbnail">
         <img :src="comic.thumbnail" v-centered-image />
         <div class="status" :class="status">
