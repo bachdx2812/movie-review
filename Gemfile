@@ -46,7 +46,6 @@ group :development do
   gem "faker"
   gem "fasterer" # check slow code
   gem "foreman" # start multiple apps
-  gem "rack-cors"
   gem "rspec-rails"
   gem "rubocop" # ruby code formating
   gem "rubocop-rails" # extension for rubocop
@@ -79,6 +78,7 @@ gem "faker" # remove this line if don't want to use faker to seed the database i
 gem "pagy" # paging, much more better than kaminari
 gem "paper_trail" # versions of activerecord
 gem "pundit" # Authorization
+gem "rack-cors"
 gem "ransack" # ActiveRecord searching
 gem "rest-client" # http request
 gem "ridgepole" # DB management
