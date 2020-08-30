@@ -46,9 +46,10 @@ group :development do
   gem "faker"
   gem "fasterer" # check slow code
   gem "foreman" # start multiple apps
+  gem "rack-cors"
+  gem "rspec-rails"
   gem "rubocop" # ruby code formating
   gem "rubocop-rails" # extension for rubocop
-  gem "rspec-rails"
   gem "spring"
   gem "spring-watcher-listen", "~> 2.0.0"
 end
@@ -56,12 +57,12 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", ">= 2.15"
-  gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem "chromedriver-helper"
   gem "database_cleaner"
   gem "factory_bot_rails"
   gem "faker"
   gem "rails-controller-testing"
+  gem "selenium-webdriver"
   gem "selenium-webdriver"
   # Easy installation and use of web drivers to run system tests with browsers
   gem "webdrivers"
@@ -74,6 +75,7 @@ gem "active_hash", "~> 2.3.0" # Constants `model like` definition
 gem "active_model_serializers", "~> 0.10.0" # serialize resource for API
 gem "devise" # Authentication
 gem "enum_help" # enum helper methods
+gem "faker" # remove this line if don't want to use faker to seed the database in production
 gem "pagy" # paging, much more better than kaminari
 gem "paper_trail" # versions of activerecord
 gem "pundit" # Authorization
@@ -81,4 +83,3 @@ gem "ransack" # ActiveRecord searching
 gem "rest-client" # http request
 gem "ridgepole" # DB management
 gem "sidekiq" # background job
-gem "faker" # remove this line if don't want to use faker to seed the database in production
