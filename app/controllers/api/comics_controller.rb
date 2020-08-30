@@ -1,7 +1,7 @@
 module Api
   class ComicsController < BaseController
     def index
-      collection = Comic.all.includes(:publisher).order(title: :asc)
+      collection = Comic.all.includes(:publisher).order(title: :asc).ransack(params[:q]).result
 
       pagy, comics = pagy(
         collection,
