@@ -185,7 +185,7 @@ export default {
     async save() {
       try {
         const data = Object.assign({}, this.data);
-        data.thumbnail = this.file;
+        if (this.file) data.thumbnail = this.file;
 
         if (this.editId) {
           await Comics.update(this.editId, data);
