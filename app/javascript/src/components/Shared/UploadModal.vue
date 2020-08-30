@@ -12,13 +12,13 @@
           <div class="form-group">
             <label>Image</label>
             <img
-              :src="data.thumbnail"
+              :src="image"
               width="120"
               height="180"
               class="d-block mb-3"
               style="object-fit: contain"
             />
-            <input class="form-control" required v-model="data.thumbnail" />
+            <input type="file" class="form-control" @change="setFile" required />
           </div>
           <div class="form-group">
             <label>Title</label>
@@ -116,7 +116,7 @@ export default {
       data: {
         title: "",
         copyright_title: "",
-        thumbnail: "",
+        thumbnail: {},
         author: "",
         publisher_id: 1,
         year_start: "",
@@ -128,6 +128,8 @@ export default {
       },
       publishers: [],
       editId: null,
+      image: null,
+      file: null,
     };
   },
   async created() {
@@ -139,6 +141,7 @@ export default {
       if (comic) {
         this.data = comic;
         this.editId = comic.id;
+        this.image = this.data.thumbnail.url;
       }
 
       this.visible = true;
@@ -151,7 +154,7 @@ export default {
         this.data = {
           title: "",
           copyright_title: "",
-          thumbnail: "",
+          thumbnail: {},
           author: "",
           publisher_id: 1,
           year_start: "",
@@ -162,15 +165,32 @@ export default {
           finished: false,
         };
         this.editId = null;
+        this.file = null;
+        this.image = null;
         document.body.classList.remove("modal-open");
       }, 300);
     },
+    setFile(event) {
+      const file = event.target.files[0];
+      this.file = file;
+      if (file) {
+        const reader = new FileReader();
+        const vm = this;
+        reader.onload = (e) => {
+          vm.image = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    },
     async save() {
       try {
+        const data = Object.assign({}, this.data);
+        data.thumbnail = this.file;
+
         if (this.editId) {
-          await Comics.update(this.editId, this.data);
+          await Comics.update(this.editId, data);
         } else {
-          await Comics.create(this.data);
+          await Comics.create(data);
         }
         window.location.reload();
       } catch (e) {

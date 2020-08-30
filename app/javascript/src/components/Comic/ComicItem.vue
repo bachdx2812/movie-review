@@ -2,7 +2,7 @@
   <li class="comic-item">
     <div class="inner" @click="open">
       <div class="thumbnail">
-        <img :src="comic.thumbnail" v-centered-image />
+        <img :src="comic.thumbnail.url" v-centered-image />
         <div class="status" :class="status">
           {{comic.volumes_collected}}/{{comic.volumes_total}}
           <template v-if="comic.ongoing">+</template>

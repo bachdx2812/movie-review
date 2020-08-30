@@ -1,4 +1,7 @@
 import qs from "qs";
+import {
+  serialize
+} from 'object-to-formdata';
 
 import request from "@/repositories/request";
 const resource = "comics";
@@ -13,10 +16,23 @@ export default {
     });
   },
   create(data) {
-    return request.post(resource, data);
+    const formData = serialize(data);
+
+    return request.post(resource, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   },
   update(id, data) {
-    return request.put(resource + "/" + id, data);
+    const formData = serialize(data);
+    formData.append("_method", "put");
+
+    return request.post(resource + "/" + id, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
   },
   delete(id) {
     return request.post(resource + "/" + id);

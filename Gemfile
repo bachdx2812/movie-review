@@ -83,3 +83,4 @@ gem "ransack" # ActiveRecord searching
 gem "rest-client" # http request
 gem "ridgepole" # DB management
 gem "sidekiq" # background job
+gem "carrierwave"
