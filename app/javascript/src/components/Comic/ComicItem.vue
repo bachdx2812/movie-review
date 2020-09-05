@@ -14,7 +14,7 @@
           <span>{{year}}</span>
         </div>
         <div class="name">
-          <div class="title">{{comic.title}}</div>
+          <div class="title">{{comic.copyright_title}}</div>
           <div class="author">{{comic.author}}</div>
         </div>
       </div>
