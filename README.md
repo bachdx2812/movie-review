@@ -88,7 +88,11 @@ docker-compose up -d
 ```
 7. Finally, you need to create the database. In another terminal, run
 ```sh
-docker-compose run web bundle exec rake db:create
-docker-compose run web bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1
-docker-compose run web bundle exec rake db:seed
+docker-compose run comics bundle exec rake db:create
+docker-compose run comics bundle exec rake ridge:apply ALLOW_DROP_TABLE=1 ALLOW_REMOVE_COLUMN=1
+
+docker ps # get docker container name
+docker cp comics.sql comics_db_1:/
+docker exec -it comics_db_1 /bin/bash # comics_db_1: docker container name
+mysql -ucomics -p comics < comics.sql
 ```
