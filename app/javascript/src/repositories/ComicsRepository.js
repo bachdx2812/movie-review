@@ -35,6 +35,6 @@ export default {
     });
   },
   delete(id) {
-    return request.post(resource + "/" + id);
+    return request.delete(resource + "/" + id);
   },
 };
