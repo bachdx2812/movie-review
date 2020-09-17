@@ -1,4 +1,4 @@
-version: '3'
+version: "3.8"
 services:
   db:
     image: mysql:5.7
@@ -8,15 +8,12 @@ services:
       MYSQL_RANDOM_ROOT_PASSWORD: "true"
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${MOVIE_REVIEW_DATABASE_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
     restart: on-failure
-  web:
-    depends_on:
-      - db
+  comics:
     build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0' -e production"
     volumes:
       - /usr/src/app/node_modules
       - .:/usr/src/app
@@ -29,18 +26,16 @@ services:
       RAILS_SERVE_STATIC_FILES: "true"
       RAILS_LOG_TO_STDOUT: "true"
       DB_HOST: db
-      DB_NAME: ${DB_DATABASE}
+      DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
-      MOVIE_REVIEW_DATABASE_PASSWORD: ${MOVIE_REVIEW_DATABASE_PASSWORD}
-      YOUTUBE_API_KEY: ${YOUTUBE_API_KEY}
-      DEFAULT_PER_PAGE: ${DEFAULT_PER_PAGE}
+      DB_PASSWORD: ${DB_PASSWORD}
     restart: on-failure
   nginx:
-    depends_on: 
-      - web
-    build: 
+    depends_on:
+      - comics
+    build:
       context: ./nginx
       dockerfile: Dockerfile
-    ports: 
+    ports:
       - "80:80"
     restart: on-failure
