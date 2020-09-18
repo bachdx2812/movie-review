@@ -3,6 +3,7 @@ module ApplicationHelper
     inner_options = {
       ":signed-in": signed_in,
       ":username": user&.username.to_json,
+      "ref": "header",
     }
 
     content_tag("app-header", nil, inner_options, false)

@@ -24,7 +24,7 @@
         </li>
       </ul>
       <ul class="menu" v-else>
-        <li @click="showModal()">Login/Register</li>
+        <li @click="showModal()">Login</li>
       </ul>
     </div>
   </div>

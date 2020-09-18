@@ -48,7 +48,11 @@ export default {
   },
   methods: {
     open: function () {
-      this.$root.$refs.uploadModal.show(this.comic);
+      if (this.$root.$refs.header.signedIn) {
+        this.$root.$refs.uploadModal.show(this.comic);
+      } else {
+        this.$root.$refs.loginModal.show();
+      }
     },
   },
 };
