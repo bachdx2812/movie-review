@@ -12,9 +12,6 @@
           </span>
           <ul class="dropdown-menu">
             <li>
-              <a href="/my_movies">My Movies</a>
-            </li>
-            <li>
               <a href="/users/sign_out" data-method="delete">Logout</a>
             </li>
           </ul>

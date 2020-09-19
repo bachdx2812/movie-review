@@ -49,19 +49,6 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   namespace :api do
-    resources :movies, only: [:create] do
-      collection do
-        get :search
-        get :youtube
-        get :my
-      end
-
-      member do
-        post :like
-        post :dislike
-      end
-    end
-
     resources :comics
     resources :publishers
 
@@ -73,6 +60,4 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  resources :my_movies, only: [:index]
 end
