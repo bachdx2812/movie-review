@@ -12,9 +12,6 @@
           </span>
           <ul class="dropdown-menu">
             <li>
-              <a href="/my_movies">My Movies</a>
-            </li>
-            <li>
               <a href="/users/sign_out" data-method="delete">Logout</a>
             </li>
           </ul>
@@ -24,7 +21,7 @@
         </li>
       </ul>
       <ul class="menu" v-else>
-        <li @click="showModal()">Login/Register</li>
+        <li @click="showModal()">Login</li>
       </ul>
     </div>
   </div>

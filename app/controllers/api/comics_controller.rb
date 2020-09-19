@@ -1,7 +1,7 @@
 module Api
   class ComicsController < BaseController
     def index
-      collection = Comic.all.includes(:publisher).order(title: :asc).ransack(params[:q]).result
+      collection = Comic.all.includes(:publisher).order(updated_at: :desc).ransack(params[:q]).result
 
       pagy, comics = pagy(
         collection,
@@ -28,6 +28,14 @@ module Api
 
     def create
       Comic.create!(comic_params)
+      render json: :ok
+    rescue StandardError => e
+      render json: e.message, status: :unprocessable_entity
+    end
+
+    def destroy
+      @comic = Comic.find(params[:id])
+      @comic.destroy!
       render json: :ok
     rescue StandardError => e
       render json: e.message, status: :unprocessable_entity

@@ -57,6 +57,9 @@
         <label class="custom-control-label" for="red"></label>
       </div>
     </div>
+    <div class="form-group px-3">
+      <input placeholder="Search" class="form-control" v-model="query" @input="searchByName" />
+    </div>
     <div
       v-infinite-scroll="loadMore"
       infinite-scroll-disabled="loading"
@@ -74,6 +77,8 @@
 import { RepositoryFactory } from "@/repositories/RepositoryFactory";
 const Comics = new RepositoryFactory.get("comics");
 
+import _ from "lodash";
+
 import ComicList from "@/components/Comic/ComicList";
 
 export default {
@@ -88,12 +93,17 @@ export default {
       stop: false,
       condition: {},
       q: 0,
+      query: "",
     };
+  },
+  created() {
+    this.searchByName = _.debounce(this.searchByName, 300);
   },
   methods: {
     async search() {
       try {
         this.loading = true;
+        this.condition.copyright_title_i_cont = this.query;
         const response = await Comics.search({
           page: this.page,
           q: this.condition,
@@ -111,15 +121,19 @@ export default {
     setQ(e) {
       switch (Number(e.target.value)) {
         case 0:
-          this.condition = {};
+          this.condition = {
+            copyright_title_i_cont: this.query,
+          };
           break;
         case 1:
           this.condition = {
+            copyright_title_i_cont: this.query,
             finished_eq: true,
           };
           break;
         case 2:
           this.condition = {
+            copyright_title_i_cont: this.query,
             finished_eq: false,
             ongoing_eq: false,
             volumes_collected_gt: 0,
@@ -127,12 +141,14 @@ export default {
           break;
         case 3:
           this.condition = {
+            copyright_title_i_cont: this.query,
             ongoing_eq: true,
             volumes_collected_gt: 0,
           };
           break;
         case 4:
           this.condition = {
+            copyright_title_i_cont: this.query,
             volumes_collected_eq: 0,
           };
           break;
@@ -142,6 +158,12 @@ export default {
       this.stop = false;
       this.comics = [];
       this.search();
+    },
+    async searchByName() {
+      this.page = 1;
+      this.stop = false;
+      this.comics = [];
+      await this.search();
     },
     loadMore() {
       if (this.stop) return;
