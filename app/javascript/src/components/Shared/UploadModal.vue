@@ -96,7 +96,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger" @click.prevent="destroy" v-if="editId">Delete</button>
+          <button type="button" class="btn btn-danger" @click.prevent="destroy" v-if="editId">Delete</button>
           <button type="submit" class="btn btn-primary" @click.prevent="save">Save</button>
           <button type="button" class="btn btn-secondary" @click="hide">Close</button>
         </div>
