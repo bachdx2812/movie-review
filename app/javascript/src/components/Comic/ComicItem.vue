@@ -115,21 +115,20 @@ export default {
     .detail {
       display: flex;
       padding: 10px;
+      flex-flow: column;
 
       .publisher {
         display: flex;
-        flex-flow: column;
         align-items: center;
-        font-size: 10px;
+        font-size: 12px;
+        line-height: 15px;
         color: black;
         margin-right: 7px;
-        width: 40px;
+        margin-bottom: 5px;
 
         > img {
-          width: 30px;
-          height: 30px;
-          margin-bottom: 5px;
-          object-fit: contain;
+          width: 15px;
+          margin-right: 5px;
         }
 
         span {
