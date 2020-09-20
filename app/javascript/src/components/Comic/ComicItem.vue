@@ -138,7 +138,7 @@ export default {
 
       .name {
         .title {
-          font-size: 14px;
+          font-size: 13px;
           font-weight: bold;
         }
       }
