@@ -1,3 +1,4 @@
+ActiveRecord::Base.connection.execute("TRUNCATE publishers RESTART IDENTITY")
 Publisher.create!(name: "NXB Kim Đồng", logo: "/images/publishers/kimdong.png")
 Publisher.create!(name: "NXB Trẻ", logo: "/images/publishers/nxb_tre.png")
 Publisher.create!(name: "TVM Comics", logo: "/images/publishers/tvm.jpg")
